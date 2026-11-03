@@ -21,7 +21,25 @@ TikTok (@historicalleaders), Instagram (@semper_lit) and YouTube Shorts via Metr
 
 ## 4. Write the spec
 - Follow `pipeline/SPEC_FORMAT.md`. Save as `stories/YYYY-MM-DD-slug.json`.
-- Narration: George (British male), plain and gripping, short sentences, hook in the first line.
+- Narration: George (British male), plain and gripping, short sentences.
+
+### Retention rules (these decide reach — follow every one)
+1. **Hook = the most shocking true fact, stated in the first 2 seconds, max ~10 spoken words.**
+   Lead with the outcome, not the setup ("A wave of molasses once killed twenty-one people.",
+   "In 1943, a dead man fooled Hitler."). Never open with "In the year...", "Let me tell you..." or a date alone.
+   Hook `lines` are 3–4 short lines, 1–3 words each; the last line is the payoff in amber.
+   Follow the hook line with a 2–4 word credibility kicker when it fits ("This really happened.").
+2. **Change the picture every 4–7 seconds.** 8–11 scenes; no scene longer than ~10 s; mix at least
+   4 different scene types; use a `map` whenever geography matters; use `stamp`s and `counter`s for reveals.
+3. **Open loop around the middle**: one line that promises a twist still to come
+   ("But the strangest part came after." / "And that wasn't even the worst of it.") — only if true.
+4. **Concrete numbers beat adjectives**: "25 feet high at 35 miles an hour", not "huge and fast".
+5. **End fast**: the final reveal, then the `end` scene with the title, a `question` that invites comments
+   (opinion or "had you heard of this?" — never bait that misleads) and the follow CTA. VO for the end scene:
+   the title line, then the question, e.g. "Had you ever heard of this one? Tell me in the comments."
+6. **Pick stories with a twist or an "I can't believe that's real" factor**: deceptions, bizarre disasters,
+   impossible escapes, accidental inventions, unlikely heroes, blunders that changed history.
+   Rotate eras and regions; avoid two similar topics in a row.
 
 ## 5. Render and check
     python3 pipeline/engine.py stories/<file>.json work/<slug>

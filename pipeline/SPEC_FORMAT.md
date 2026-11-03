@@ -37,7 +37,13 @@ Output: `work/<slug>/<slug>.mp4` and `work/<slug>/preview.jpg` (one frame per sc
 - `quote` — a document being typed. `style` telegram | newspaper | letter, `header`, `meta` (2 short lines),
   `quote` (≤ 80 chars, a REAL verified quote only), `attribution`.
 - `timeline` — `header`, `events` (2–5): [{"date": "1914", "label": "short label"}].
-- `end` — last scene, always. `lines` (2–3), optional `cta` (default "Follow for more true history").
+- `end` — last scene, always. `lines` (2–3), `question` (comment prompt shown in amber, required),
+  optional `cta` (default "Follow for a new true story every day"). Segments: title line, then the question line, both `"cap": ""`.
+
+## Built-in polish (automatic, no spec needed)
+Big 1–3-word pop captions, slow push-in zoom on every scene, zoom-punch + flash and an impact sound on every cut,
+a progress bar at the top, pulsing color glow behind key text (`color` on a scene picks it), drifting dust,
+music bed with ducking, risers before stamps and counters.
 
 ## Length and pacing
 - Target 65–75 s. That is roughly 165–195 spoken words across 8–11 scenes. The engine prints the length;

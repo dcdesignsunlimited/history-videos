@@ -4,11 +4,8 @@
  "scenes": [
   {
    "type": "hook",
-   "tag": "TRUE STORY \u00b7 1919",
+   "tag": "TRUE STORY \u00b7 BOSTON, 1919",
    "lines": [
-    {
-     "t": "IN 1919,"
-    },
     {
      "t": "A WAVE OF"
     },
@@ -16,13 +13,16 @@
      "t": "MOLASSES"
     },
     {
-     "t": "HIT BOSTON.",
+     "t": "KILLED"
+    },
+    {
+     "t": "21 PEOPLE.",
      "c": "a"
     }
    ],
    "segments": [
     {
-     "vo": "In nineteen nineteen, a wave of molasses swept through Boston.",
+     "vo": "A wave of molasses once killed twenty-one people. This really happened.",
      "cap": ""
     }
    ]
@@ -203,8 +203,13 @@
     {
      "vo": "The great molasses flood.",
      "cap": ""
+    },
+    {
+     "vo": "Had you ever heard of this one? Tell me in the comments.",
+     "cap": ""
     }
-   ]
+   ],
+   "question": "Had you ever heard of this one?"
   }
  ]
 }

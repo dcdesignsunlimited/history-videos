@@ -67,27 +67,39 @@ def fit_font(d, text, path, maxsize, maxw):
     while s > 20 and d.textlength(text, font=F(path, s)) > maxw: s -= 4
     return s
 
-def caption(d, chunks, t):
-    for (a, b, text) in chunks:
-        if not text or not (a <= t < b): continue
-        words = text.split(); f = F(FBLACK, 70)
-        lines, cur = [], []
+def kinetic_chunks(segs):
+    """Split each narration line into 1-3 word captions timed across its spoken span."""
+    out = []
+    for a, b, f, L, text in segs:
+        if not text: continue
+        words = text.split(); groups, cur = [], []
         for w in words:
-            if cur and d.textlength(" ".join(cur + [w]), font=f) > 920: lines.append(cur); cur = [w]
-            else: cur.append(w)
-        if cur: lines.append(cur)
-        ap = eout(prog(t, a, a + 0.18)); dy = (1 - ap) * 24; lh = 88
-        y0 = 1330 - (len(lines) - 1) * lh / 2 + dy
-        span = (b - a) * 0.85
-        idx = int(clamp((t - a) / span, 0, 0.9999) * len(words)) if span > 0 else 0
-        sp = d.textlength(" ", font=f); wi = 0
-        for li, ln in enumerate(lines):
-            ws = [d.textlength(w, font=f) for w in ln]
-            x = W / 2 - (sum(ws) + sp * (len(ln) - 1)) / 2
-            for w, ww in zip(ln, ws):
-                d.text((x, y0 + li * lh), w, font=f, fill=rgba(AMBER if wi == idx else WHITE, ap), anchor="lm",
-                       stroke_width=7, stroke_fill=(0, 0, 0, int(255 * ap)))
-                x += ww + sp; wi += 1
+            cur.append(w)
+            if len(cur) >= 3 or w[-1] in ",.;:!?—" or (len(cur) == 2 and len(" ".join(cur)) > 14):
+                groups.append(cur); cur = []
+        if cur: groups.append(cur)
+        s0, span = a + LEAD, max(L, 0.3)
+        weights = [sum(len(w) for w in g) + 2 for g in groups]; tot = sum(weights); acc = 0
+        for g, wgt in zip(groups, weights):
+            st = s0 + span * acc / tot; acc += wgt; en = s0 + span * acc / tot
+            out.append((st, en, g))
+        if out: out[-1] = (out[-1][0], max(out[-1][1], b - 0.02), out[-1][2])
+    return out
+
+def caption(d, chunks, t):
+    for (a, b, words) in chunks:
+        if not (a <= t < b): continue
+        f = F(FBLACK, 96)
+        text = " ".join(words)
+        sz = 96 if d.textlength(text, font=f) <= 960 else fit_font(d, text, FBLACK, 96, 960)
+        f = F(FBLACK, sz * (1.18 - 0.18 * eout(prog(t, a, a + 0.09))))
+        sp = d.textlength(" ", font=f); ws = [d.textlength(w, font=f) for w in words]
+        x = W / 2 - (sum(ws) + sp * (len(ws) - 1)) / 2
+        idx = int(clamp((t - a) / max(b - a, 0.01), 0, 0.9999) * len(words))
+        for i, (w, ww) in enumerate(zip(words, ws)):
+            d.text((x, 1320), w, font=f, fill=AMBER if i == idx and len(words) > 1 else WHITE, anchor="lm",
+                   stroke_width=9, stroke_fill=(0, 0, 0))
+            x += ww + sp
 
 def stamp_img(text, size=64, c=RED, angle=-8, pad=28):
     f = F(FBLACK, size)
@@ -290,9 +302,9 @@ def s_map(sc, t, D, ctx):
 
 # ---------------- other scene types ----------------
 def s_hook(sc, t, D, ctx):
-    img = bgimg().copy(); d = ImageDraw.Draw(img, "RGBA"); atmosphere(d, sc.get("atmosphere"), t)
-    if sc.get("tag"): label(d, (W / 2, 650), sc["tag"], eout(prog(t, 0, 0.4)), AMBER, 40)
-    lines = sc["lines"]; y = 790; t0 = 0.2
+    img = glowbg(sc, t, 950, default="r"); d = ImageDraw.Draw(img, "RGBA"); atmosphere(d, sc.get("atmosphere"), t)
+    if sc.get("tag"): label(d, (W / 2, 650), sc["tag"], 1.0, AMBER, 40)
+    lines = sc["lines"]; y = 790; t0 = -0.3   # first line is already on screen at frame 0 (good auto-thumbnail)
     for i, ln in enumerate(lines):
         c = col(ln.get("c", "w")); last = i == len(lines) - 1
         sz = fit_font(d, ln["t"], FBLACK, 175 if last else 150, 1010); p = prog(t, t0, t0 + 0.28)
@@ -304,13 +316,12 @@ def s_hook(sc, t, D, ctx):
             if u > 0:
                 hw = d.textlength(ln["t"], font=F(FBLACK, sz)) / 2
                 d.rectangle([W / 2 - hw, y + sz * 0.62, W / 2 - hw + 2 * hw * u, y + sz * 0.62 + 16], fill=RED)
-        y += sz * 1.05 if i < len(lines) - 2 else sz * 1.12; t0 += 0.4
-    if t < 0.3 and sc.get("first"): d.rectangle([0, 0, W, H], fill=(0, 0, 0, int(255 * (1 - t / 0.3))))
+        y += sz * 1.05 if i < len(lines) - 2 else sz * 1.12; t0 += 0.32
     return img, d
 
 def s_date(sc, t, D, ctx):
     if sc.get("atmosphere") == "night_sea": img = night().copy()
-    else: img = bgimg().copy()
+    else: img = glowbg(sc, t, 800)
     d = ImageDraw.Draw(img, "RGBA")
     atm = sc.get("atmosphere")
     if atm == "night_sea": sea(d, t)
@@ -341,7 +352,7 @@ def make_card(sc):
     return im, tx
 
 def s_card(sc, t, D, ctx):
-    img = bgimg().copy(); d0 = ImageDraw.Draw(img, "RGBA"); atmosphere(d0, sc.get("atmosphere"), t)
+    img = glowbg(sc, t, 640); d0 = ImageDraw.Draw(img, "RGBA"); atmosphere(d0, sc.get("atmosphere"), t)
     if "card" not in ctx: ctx["card"] = make_card(sc)
     card, tx = ctx["card"]; p = eout(prog(t, 0, 0.5)); cx, cy = W / 2, 640 + (1 - p) * 1300
     paste(img, card, cx, cy); ox, oy = cx - card.width / 2 + 40, cy - card.height / 2 + 40
@@ -369,7 +380,7 @@ def s_card(sc, t, D, ctx):
     return img, d
 
 def s_quote(sc, t, D, ctx):
-    img = bgimg().copy()
+    img = glowbg(sc, t, 760)
     style = sc.get("style", "telegram")
     if "paper" not in ctx:
         w, h = 860, 640; fill = {"telegram": (236, 225, 180, 255), "newspaper": (232, 228, 216, 255), "letter": (246, 240, 226, 255)}[style]
@@ -404,7 +415,7 @@ def s_quote(sc, t, D, ctx):
     return img, d
 
 def s_counter(sc, t, D, ctx):
-    img = bgimg().copy(); d = ImageDraw.Draw(img, "RGBA"); atmosphere(d, sc.get("atmosphere"), t)
+    img = glowbg(sc, t, 820); d = ImageDraw.Draw(img, "RGBA"); atmosphere(d, sc.get("atmosphere"), t)
     if sc.get("header"): d.text((W / 2, 520), sc["header"], font=F(FXB, fit_font(d, sc["header"], FXB, 46, 1000)), fill=rgba(AMBER, eout(prog(t, 0, 0.4))), anchor="mm")
     a0 = sc.get("at", 0.08) * D; dur = min(sc.get("dur", 0.25) * D, 2.2); cp = prog(t, a0, a0 + dur)
     if cp > 0:
@@ -419,7 +430,7 @@ def s_counter(sc, t, D, ctx):
     return img, d
 
 def s_timeline(sc, t, D, ctx):
-    img = bgimg().copy(); d = ImageDraw.Draw(img, "RGBA")
+    img = glowbg(sc, t, 730); d = ImageDraw.Draw(img, "RGBA")
     if sc.get("header"): d.text((W / 2, 260), sc["header"], font=F(FXB, fit_font(d, sc["header"], FXB, 46, 1000)), fill=AMBER, anchor="mm")
     ev = sc["events"][:5]; n = len(ev); top, bot = 380, 1080; step = (bot - top) / max(1, n - 1)
     lp = eout(prog(t, 0.1, D * 0.8)); d.line([(200, top), (200, top + (bot - top) * lp)], fill=(86, 110, 134), width=6)
@@ -432,14 +443,25 @@ def s_timeline(sc, t, D, ctx):
         d.text((250 + (1 - p) * 30, y + 32), e["label"], font=F(FBOLD, fit_font(d, e["label"], FBOLD, 36, 780)), fill=rgba(WHITE, p * 0.9), anchor="lm")
     return img, d
 
+_DARK = None
 def s_end(sc, t, D, ctx):
-    img = Image.new("RGB", (W, H), (6, 9, 14)); d = ImageDraw.Draw(img, "RGBA")
-    lines = sc["lines"]; y = 960 - (len(lines) - 1) * 75
+    global _DARK
+    if _DARK is None: _DARK = Image.new("RGB", (W, H), (6, 9, 14))
+    img = glowbg(sc, t, 820, base=_DARK); d = ImageDraw.Draw(img, "RGBA")
+    lines = sc["lines"]; y = 820 - (len(lines) - 1) * 75
     for i, ln in enumerate(lines):
         p = prog(t, 0.1 + i * 0.3, 0.4 + i * 0.3); sz = fit_font(d, ln["t"], FBLACK, 140, 1000)
         if p > 0: d.text((W / 2, y), ln["t"], font=F(FBLACK, sz * (1.25 - 0.25 * eout(p))), fill=rgba(col(ln.get("c", "w")), eout(p)), anchor="mm")
         y += 150
-    d.text((W / 2, y + 60), sc.get("cta", "Follow for more true history"), font=F(FBOLD, 40), fill=rgba(GREY, prog(t, 1.3, 1.8)), anchor="mm")
+    q = sc.get("question")
+    if q:   # comment prompt: drives comments, which the algorithms reward
+        qa = eout(prog(t, 0.2 + len(lines) * 0.3, 0.6 + len(lines) * 0.3))
+        qy = y + 10
+        qlines = [q] if d.textlength(q, font=F(FXB, 54)) <= 980 else wrap(q, 28)[:3]
+        for ln in qlines:
+            d.text((W / 2, qy), ln, font=F(FXB, 54), fill=rgba(AMBER, qa), anchor="mm"); qy += 70
+        y = qy
+    d.text((W / 2, y + 60), sc.get("cta", "Follow for a new true story every day"), font=F(FBOLD, 40), fill=rgba(GREY, prog(t, 1.3, 1.8)), anchor="mm")
     if t > D - 0.4: d.rectangle([0, 0, W, H], fill=(0, 0, 0, int(255 * prog(t, D - 0.4, D))))
     return img, d
 
@@ -474,28 +496,58 @@ def layout(spec, timing):
         plan.append({"start": start, "dur": cur, "segs": segs}); start += cur
     return plan, start
 
-def frame(sc, t, D, ctx, caps):
-    img, d = SCENES[sc["type"]](sc, t, D, ctx)
-    caption(d, caps, t)
+_GLOW = {}
+def glow(c):
+    if c not in _GLOW:
+        g = Image.new("RGBA", (900, 900), (0, 0, 0, 0))
+        ImageDraw.Draw(g).ellipse([150, 150, 750, 750], fill=c + (70,))
+        _GLOW[c] = g.filter(ImageFilter.GaussianBlur(110))
+    return _GLOW[c]
+
+def glowbg(sc, t, y, base=None, default="a"):
+    """Background with a soft pulsing color glow behind the main element, plus drifting dust."""
+    img = (base or bgimg()).copy()
+    gc = col(sc.get("color", default), AMBER)
+    paste(img, glow(gc), W / 2, y, 1.0 + 0.06 * math.sin(t * 2.2), 0.75 + 0.25 * math.sin(t * 2.2))
+    if not sc.get("atmosphere"): atmosphere(ImageDraw.Draw(img, "RGBA"), "dust", t)
     return img
 
+def frame(sc, t, D, ctx, caps, gstart=0.0, total=1.0):
+    img, _ = SCENES[sc["type"]](sc, t, D, ctx)
+    # constant motion: slow push-in on every scene, plus a zoom punch on each cut
+    s = 1.0 + 0.045 * (t / D)
+    if not sc.get("first"): s += 0.07 * (1 - eout(prog(t, 0, 0.3)))
+    if s > 1.001:
+        zw, zh = int(W * s), int(H * s)
+        img = img.resize((zw, zh), Image.BILINEAR).crop(((zw - W) // 2, (zh - H) // 2, (zw - W) // 2 + W, (zh - H) // 2 + H))
+    d = ImageDraw.Draw(img, "RGBA")
+    if not sc.get("first") and t < 0.12:
+        d.rectangle([0, 0, W, H], fill=(255, 255, 255, int(120 * (1 - t / 0.12))))
+    caption(d, caps, t)
+    gp = clamp((gstart + t) / total)
+    d.rectangle([0, 0, W, 9], fill=(0, 0, 0, 90)); d.rectangle([0, 0, int(W * gp), 9], fill=AMBER)
+    return img
+
+def scene_caps(sc, pl):
+    return [] if sc["type"] in ("hook", "end") else kinetic_chunks(pl["segs"])
+
 def render_scene(args):
-    i, sc, pl, outdir = args
-    D = pl["dur"]; caps = [] if sc["type"] in ("hook", "end") else [(a, b, c) for a, b, _, _, c in pl["segs"]]
+    i, sc, pl, outdir, total = args
+    D = pl["dur"]; caps = scene_caps(sc, pl)
     tmp = os.path.join(outdir, f"scene{i:02d}.tmp.mp4"); fin = os.path.join(outdir, f"scene{i:02d}.mp4")
     pr = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
                            "-i", "-", "-c:v", "libx264", "-preset", "veryfast", "-crf", "19", "-pix_fmt", "yuv420p", "-g", "60", tmp], stdin=subprocess.PIPE)
     ctx = {}
-    for k in range(int(round(D * FPS))): pr.stdin.write(frame(sc, k / FPS, D, ctx, caps).tobytes())
+    for k in range(int(round(D * FPS))): pr.stdin.write(frame(sc, k / FPS, D, ctx, caps, pl["start"], total).tobytes())
     pr.stdin.close()
     if pr.wait() != 0: raise SystemExit(f"scene {i} failed")
     os.replace(tmp, fin); return fin
 
-def preview(spec, plan, outdir):
+def preview(spec, plan, outdir, total):
     ims = []
     for sc, pl in zip(spec["scenes"], plan):
-        D = pl["dur"]; caps = [] if sc["type"] in ("hook", "end") else [(a, b, c) for a, b, _, _, c in pl["segs"]]
-        ims.append(frame(sc, D * 0.8, D, {}, caps).resize((270, 480)))
+        D = pl["dur"]; caps = scene_caps(sc, pl)
+        ims.append(frame(sc, D * 0.8, D, {}, caps, pl["start"], total).resize((270, 480)))
     sheet = Image.new("RGB", (270 * min(6, len(ims)), 480 * ((len(ims) + 5) // 6)))
     for k, im in enumerate(ims): sheet.paste(im, ((k % 6) * 270, (k // 6) * 480))
     sheet.save(os.path.join(outdir, "preview.jpg"), quality=85)
@@ -524,15 +576,20 @@ def soundtrack(spec, plan, total, outdir):
     def ping():
         n = int(1.4 * SR); tt = np.arange(n) / SR
         return (np.sin(2 * np.pi * 880 * tt) + .4 * np.sin(2 * np.pi * 1320 * tt)) * env(n, .005, .35) * .18
+    def riser(dd=0.8):
+        n = int(dd * SR); tt = np.arange(n) / SR; k = tt / dd
+        tone = np.sin(2 * np.pi * (180 * tt + 600 * tt ** 2 / dd))
+        return (tone * .25 + bp(rng.standard_normal(n), 800, 6000) * .5) * k ** 2.5 * .5
     def typing(buf, t0, chars, dur):
         for c in range(chars): add(buf, click(), t0 + dur * c / max(1, chars) + rng.uniform(-.01, .01), .55)
     fx = np.zeros(N)
     for sc, pl in zip(spec["scenes"], plan):
         s0, D, ty = pl["start"], pl["dur"], sc["type"]
         add(fx, whoosh(.6), s0 - .2, .7)
+        if s0 > 0: add(fx, thud(.55), s0)   # impact on every cut
         if ty == "hook":
             n = len(sc["lines"])
-            for i in range(n): add(fx, thud(1.2 if i == n - 1 else .5), s0 + .48 + i * .4)
+            for i in range(1, n): add(fx, thud(1.2 if i == n - 1 else .5), s0 - .02 + .32 * i)
         elif ty == "end":
             for i in range(len(sc["lines"])): add(fx, thud(1.3 if i == len(sc["lines"]) - 1 else .6), s0 + .4 + i * .3)
         elif ty == "map":
@@ -547,7 +604,7 @@ def soundtrack(spec, plan, total, outdir):
         elif ty == "counter":
             a0 = sc.get("at", .08) * D; dd = min(sc.get("dur", .25) * D, 2.2)
             for k in range(14): add(fx, click() * 2, s0 + a0 + dd * k / 14, .6)
-            add(fx, thud(1.1), s0 + a0 + dd)
+            add(fx, riser(dd), s0 + a0, .8); add(fx, thud(1.1), s0 + a0 + dd)
         elif ty == "timeline":
             n = len(sc["events"][:5])
             for i in range(n): add(fx, ping() * .7, s0 + .2 + (D * .75) * i / max(1, n))
@@ -555,12 +612,15 @@ def soundtrack(spec, plan, total, outdir):
             n = int(D * SR); tt = np.arange(n) / SR
             add(fx, lp(rng.standard_normal(n), 600) * (.55 + .45 * np.sin(2 * np.pi * .22 * tt)) * .45 * np.minimum(1, tt / .6), s0)
         if sc.get("stamp"):
-            yy = {"map": .55}.get(ty, .55); add(fx, stamp(), s0 + sc["stamp"].get("at", yy) * D + .12, 1.2)
+            ts = s0 + sc["stamp"].get("at", .55) * D + .12
+            add(fx, riser(.7), ts - .7, .7); add(fx, stamp(), ts, 1.2)
     tt = np.arange(N) / SR
     def pad(f, a, l): return a * np.sin(2 * np.pi * f * tt + .3 * np.sin(2 * np.pi * .07 * tt)) * (.6 + .4 * np.sin(2 * np.pi * l * tt))
     mus = pad(55, .22, .05) + pad(82.41, .14, .07) + pad(110, .10, .09) + pad(130.81, .06, .11) + pad(220.2, .025, .13) + pad(659.3, .012, .2) + pad(523.3, .01, .17)
-    beat = np.zeros(N); kick = thud(.5)[:int(.3 * SR)]; bt = 60 / 84; k = 0.0
-    while k < total - 2: add(beat, kick, k, .35 if int(k / bt) % 4 else .5); k += bt
+    beat = np.zeros(N); kick = thud(.5)[:int(.3 * SR)]; bt = 60 / 92; k = 0.0
+    hat = hp(rng.standard_normal(int(.04 * SR)), 6000) * env(int(.04 * SR), .001, .012)
+    while k < total - 2:
+        add(beat, kick, k, .4 if int(k / bt) % 4 else .55); add(beat, hat, k + bt / 2, .12); k += bt
     mus = lp(mus + beat, 3000) * np.minimum(1, tt / 1.5) * np.clip((total - tt) / 2.0, 0, 1)
     vo = np.zeros(N)
     for pl in plan:
@@ -577,9 +637,9 @@ def make(spec_path, outdir):
     spec["scenes"][0]["first"] = True
     timing = tts(spec, outdir); plan, total = layout(spec, timing)
     print(f"planned length {total:.1f}s")
-    preview(spec, plan, outdir)
+    preview(spec, plan, outdir, total)
     with Pool(2) as pool:
-        files = pool.map(render_scene, [(i, sc, pl, outdir) for i, (sc, pl) in enumerate(zip(spec["scenes"], plan))])
+        files = pool.map(render_scene, [(i, sc, pl, outdir, total) for i, (sc, pl) in enumerate(zip(spec["scenes"], plan))])
     lst = os.path.join(outdir, "list.txt")
     with open(lst, "w") as fh:
         for f in files: fh.write(f"file '{f}'\n")
