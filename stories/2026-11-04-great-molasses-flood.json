@@ -1,0 +1,210 @@
+{
+ "slug": "great-molasses-flood",
+ "title": "The Great Molasses Flood",
+ "scenes": [
+  {
+   "type": "hook",
+   "tag": "TRUE STORY \u00b7 1919",
+   "lines": [
+    {
+     "t": "IN 1919,"
+    },
+    {
+     "t": "A WAVE OF"
+    },
+    {
+     "t": "MOLASSES"
+    },
+    {
+     "t": "HIT BOSTON.",
+     "c": "a"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "In nineteen nineteen, a wave of molasses swept through Boston.",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "type": "date",
+   "big": "JANUARY 15, 1919",
+   "sub": "12:30 PM \u00b7 BOSTON'S NORTH END",
+   "segments": [
+    {
+     "vo": "January fifteenth, nineteen nineteen. Around twelve thirty in the afternoon.",
+     "cap": "January 15, 1919. Around 12:30 in the afternoon."
+    }
+   ]
+  },
+  {
+   "type": "map",
+   "header": "BOSTON, MASSACHUSETTS",
+   "bbox": [
+    -74.5,
+    40.6,
+    -68.5,
+    44.6
+   ],
+   "pins": [
+    {
+     "lon": -71.06,
+     "lat": 42.36,
+     "label": "BOSTON",
+     "at": 0.15
+    }
+   ],
+   "segments": [
+    {
+     "vo": "In Boston's North End, near the harbor, stood a giant steel tank."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "INSIDE THE TANK",
+   "value": 2.3,
+   "suffix": " MILLION",
+   "sub": "GALLONS OF MOLASSES",
+   "segments": [
+    {
+     "vo": "It held two point three million gallons of molasses.",
+     "cap": "It held 2.3 million gallons of molasses."
+    },
+    {
+     "vo": "It was meant to be turned into industrial alcohol."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "TANK RECORD \u00b7 PURITY DISTILLING",
+   "photo": false,
+   "lines": [
+    "OWNER:     PURITY DISTILLING CO.",
+    "CONTENTS:  2.3M GAL. MOLASSES",
+    "CONDITION: LEAKING"
+   ],
+   "added": {
+    "lines": [
+     "FIX:       PAINTED IT BROWN"
+    ],
+    "at": 0.55
+   },
+   "stamp": {
+    "text": "IGNORED",
+    "at": 0.8
+   },
+   "segments": [
+    {
+     "vo": "And it leaked so badly that it was painted brown to hide the drips."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "THEN THE TANK BURST",
+   "value": 25,
+   "prefix": "UP TO ",
+   "suffix": " FT",
+   "sub": "AT AN ESTIMATED 35 MPH",
+   "atmosphere": "dust",
+   "segments": [
+    {
+     "vo": "Then the tank burst.",
+     "cap": "Then the tank burst."
+    },
+    {
+     "vo": "A wave of molasses up to twenty-five feet high tore through the streets at an estimated thirty-five miles an hour.",
+     "cap": "A wave up to 25 feet high tore through the streets at an estimated 35 mph."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "value": 21,
+   "suffix": " DEAD",
+   "sub": "ABOUT 150 INJURED",
+   "color": "r",
+   "segments": [
+    {
+     "vo": "It trapped people and horses. Twenty-one people died, and about one hundred fifty were injured.",
+     "cap": "It trapped people and horses. 21 people died, and about 150 were injured."
+    },
+    {
+     "vo": "Rescuers waded through the sticky mess for days, searching for survivors."
+    }
+   ]
+  },
+  {
+   "type": "timeline",
+   "header": "THE AFTERMATH",
+   "events": [
+    {
+     "date": "WEEKS",
+     "label": "Crews hose the streets with seawater"
+    },
+    {
+     "date": "SUMMER",
+     "label": "The harbor finally stops running brown"
+    },
+    {
+     "date": "3 YEARS",
+     "label": "of court hearings for 119 residents"
+    },
+    {
+     "date": "$628,000",
+     "label": "paid by the tank's owner"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "Cleanup took weeks, and the harbor stayed brown until summer."
+    },
+    {
+     "vo": "Residents sued, and after three years of hearings, the owner paid six hundred twenty-eight thousand dollars.",
+     "cap": "Residents sued, and after three years of hearings, the owner paid $628,000."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "NEW RULES AFTER 1919",
+   "photo": false,
+   "lines": [
+    "LICENSED ARCHITECT: REQUIRED",
+    "CIVIL ENGINEER:     REQUIRED"
+   ],
+   "segments": [
+    {
+     "vo": "For decades, locals claimed the neighborhood still smelled of molasses on hot summer days."
+    },
+    {
+     "vo": "The disaster changed building laws, requiring licensed architects and engineers to oversee projects like this."
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "lines": [
+    {
+     "t": "THE GREAT"
+    },
+    {
+     "t": "MOLASSES"
+    },
+    {
+     "t": "FLOOD.",
+     "c": "a"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "The great molasses flood.",
+     "cap": ""
+    }
+   ]
+  }
+ ]
+}
