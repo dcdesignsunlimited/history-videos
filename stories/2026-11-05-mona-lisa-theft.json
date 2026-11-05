@@ -1,0 +1,379 @@
+{
+ "slug": "mona-lisa-theft",
+ "title": "The Day the Mona Lisa Vanished",
+ "scenes": [
+  {
+   "type": "hook",
+   "tag": "TRUE STORY · PARIS, 1911",
+   "lines": [
+    {
+     "t": "THE MONA"
+    },
+    {
+     "t": "LISA WAS"
+    },
+    {
+     "t": "STOLEN.",
+     "c": "a"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "Someone once stole the Mona Lisa. This really happened.",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/mona-lisa-theft/2.jpg",
+   "pan": "right",
+   "grade": "sepia",
+   "header": "THE LOUVRE, PARIS",
+   "credit": "Photo: Notman Photo Co (Public domain)",
+   "segments": [
+    {
+     "vo": "In nineteen eleven, it hung in the Louvre, in Paris.",
+     "cap": "In 1911, it hung in the Louvre, in Paris."
+    }
+   ]
+  },
+  {
+   "type": "date",
+   "big": "AUGUST 21, 1911",
+   "sub": "MONDAY · THE LOUVRE IS CLOSED",
+   "segments": [
+    {
+     "vo": "On Monday, August twenty-first, the museum was closed to the public.",
+     "cap": "On Monday, August 21, the museum was closed to the public."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "FORMER LOUVRE WORKER",
+   "photo": true,
+   "lines": [
+    "NAME: V. PERUGGIA",
+    "FROM: ITALY",
+    "JOB: HANDYMAN"
+   ],
+   "segments": [
+    {
+     "vo": "But an Italian handyman named Vincenzo Peh-roo-jah knew the building well.",
+     "cap": "But an Italian handyman named Vincenzo Peruggia knew the building well."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "shield-lock",
+   "text": "HE BUILT IT",
+   "sub": "THE PAINTING'S PROTECTIVE CASE",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "He had even helped build the painting's protective case."
+    }
+   ]
+  },
+  {
+   "type": "split",
+   "header": "THE HEIST",
+   "left": {
+    "title": "DISGUISE",
+    "icon": "shirt",
+    "text": "WHITE SMOCK",
+    "color": "w"
+   },
+   "right": {
+    "title": "EXIT",
+    "icon": "door-exit",
+    "text": "PAINTING GONE",
+    "color": "a"
+   },
+   "mid": "→",
+   "right_at": 0.45,
+   "segments": [
+    {
+     "vo": "Wearing a white worker's smock, he blended right in."
+    },
+    {
+     "vo": "Then he took the painting and walked out with it."
+    }
+   ]
+  },
+  {
+   "type": "compare",
+   "header": "SMALLER THAN YOU THINK",
+   "unit": "CM",
+   "items": [
+    {
+     "label": "MONA LISA",
+     "value": 77,
+     "icon": "photo",
+     "text": "77 CM",
+     "color": "a"
+    },
+    {
+     "label": "A PERSON",
+     "value": 180,
+     "icon": "man",
+     "text": "180 CM",
+     "color": "w"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "The painting is only seventy-seven centimeters tall.",
+     "cap": "The painting is only 77 centimeters tall."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "clock-exclamation",
+   "text": "NEXT DAY",
+   "sub": "NOBODY NOTICED",
+   "color": "r",
+   "shake": {
+    "at": 0.2,
+    "dur": 0.5,
+    "amp": 22
+   },
+   "segments": [
+    {
+     "vo": "Nobody noticed it was gone until the next day."
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/mona-lisa-theft/1.jpg",
+   "pan": "in",
+   "focus": [
+    0.46,
+    0.4
+   ],
+   "grade": "bw",
+   "header": "THE EMPTY WALL · 1911",
+   "credit": "Photo: Wikimedia Commons (Public domain)",
+   "circle": {
+    "x": 0.46,
+    "y": 0.42,
+    "r": 0.2,
+    "at": 0.35,
+    "label": "MISSING"
+   },
+   "segments": [
+    {
+     "vo": "When the Louvre reopened, crowds came just to stare at the empty wall."
+    }
+   ]
+  },
+  {
+   "type": "split",
+   "header": "THE SUSPECTS",
+   "left": {
+    "title": "APOLLINAIRE",
+    "icon": "feather",
+    "text": "ARRESTED",
+    "color": "r"
+   },
+   "right": {
+    "title": "PICASSO",
+    "icon": "brush",
+    "text": "QUESTIONED",
+    "color": "a"
+   },
+   "mid": "VS",
+   "right_at": 0.5,
+   "segments": [
+    {
+     "vo": "Police arrested the poet Guillaume Apollin-air.",
+     "cap": "Police arrested the poet Guillaume Apollinaire."
+    },
+    {
+     "vo": "They even questioned Pablo Picasso."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "POLICE FILE · LOUVRE THEFT",
+   "photo": true,
+   "lines": [
+    "SUSPECT: V. PERUGGIA",
+    "QUESTIONED: TWICE"
+   ],
+   "added": {
+    "lines": [
+     "SERIOUS SUSPECT: NO"
+    ],
+    "at": 0.55
+   },
+   "stamp": {
+    "text": "CLEARED",
+    "at": 0.8,
+    "color": "red"
+   },
+   "segments": [
+    {
+     "vo": "The strangest part? Police questioned the real thief twice, and moved on."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "HIDDEN IN A TRUNK",
+   "value": 2,
+   "suffix": " YEARS",
+   "sub": "IN HIS PARIS APARTMENT",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "He hid it in a trunk in his apartment for two years.",
+     "cap": "He hid it in a trunk in his apartment for 2 years."
+    }
+   ]
+  },
+  {
+   "type": "map",
+   "header": "DECEMBER 1913",
+   "bbox": [
+    -1.5,
+    41.0,
+    14.5,
+    51.0
+   ],
+   "pins": [
+    {
+     "lon": 2.35,
+     "lat": 48.86,
+     "label": "PARIS",
+     "at": 0.1
+    },
+    {
+     "lon": 11.25,
+     "lat": 43.77,
+     "label": "FLORENCE",
+     "color": "a",
+     "at": 0.55
+    }
+   ],
+   "arrows": [
+    {
+     "from": [
+      2.35,
+      48.86
+     ],
+     "to": [
+      11.25,
+      43.77
+     ],
+     "color": "a",
+     "at": 0.25,
+     "dur": 0.4,
+     "curve": 0.2
+    }
+   ],
+   "countries": [
+    {
+     "name": "Italy",
+     "color": "a",
+     "at": 0.5
+    }
+   ],
+   "segments": [
+    {
+     "vo": "In December nineteen thirteen, he took it to Florence, Italy.",
+     "cap": "In December 1913, he took it to Florence, Italy."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "gavel",
+   "text": "CAUGHT",
+   "sub": "ARRESTED AT HIS HOTEL",
+   "color": "r",
+   "stamp": {
+    "text": "ARRESTED",
+    "at": 0.7,
+    "color": "red"
+   },
+   "segments": [
+    {
+     "vo": "An art dealer alerted the Uffizi's director, and police arrested him at his hotel.",
+     "cap": "An art dealer alerted the Uffizi's director, and police arrested him at his hotel."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "flag",
+   "text": "FOR ITALY?",
+   "sub": "HE BLAMED NAPOLEON",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "He claimed he was bringing it home to Italy, believing Napoleon had taken it."
+    }
+   ]
+  },
+  {
+   "type": "units",
+   "header": "HIS PUNISHMENT",
+   "count": 7,
+   "icon": "calendar",
+   "per_row": 4,
+   "color": "a",
+   "suffix": " MONTHS",
+   "sub": "SERVED BEHIND BARS",
+   "segments": [
+    {
+     "vo": "In the end, he served just seven months behind bars.",
+     "cap": "In the end, he served just 7 months behind bars."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "crown",
+   "text": "WORLD FAMOUS",
+   "sub": "THANKS TO THE THEFT",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "The theft helped make it one of the most famous paintings on Earth."
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "lines": [
+    {
+     "t": "THE GREAT"
+    },
+    {
+     "t": "MONA LISA"
+    },
+    {
+     "t": "HEIST.",
+     "c": "a"
+    }
+   ],
+   "question": "Had you ever heard of this one?",
+   "segments": [
+    {
+     "vo": "The great Mona Lisa heist.",
+     "cap": ""
+    },
+    {
+     "vo": "Had you ever heard of this one? Tell me in the comments.",
+     "cap": ""
+    }
+   ]
+  }
+ ]
+}

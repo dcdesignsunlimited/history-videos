@@ -1,0 +1,16 @@
+{
+ "1.jpg": {
+  "title": "File:Mona Lisa stolen-1911.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mona_Lisa_stolen-1911.jpg",
+  "license": "Public domain",
+  "source": "Wikimedia Commons",
+  "date": "1911-08"
+ },
+ "2.jpg": {
+  "title": "File:Panoramic view of Louvre, Paris, ca. 1909.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Panoramic_view_of_Louvre,_Paris,_ca._1909.jpg",
+  "license": "Public domain",
+  "source": "Notman Photo Co",
+  "date": "circa 1909date QS:P,+1909-00-00T00:00:00Z/9,P1480,Q5727902"
+ }
+}
