@@ -12,9 +12,12 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 W, H, FPS = 1080, 1920, 30
-VOICE, SPEED = "bm_george", 1.15
-LEAD, GAP = 0.06, 0.22
-TAILS = {"hook": 0.4, "end": 1.6}
+VOICE, SPEED = "bm_george", 1.3
+LEAD, GAP = 0.03, 0.08
+TAILS = {"hook": 0.3, "end": 1.1}
+MIN_LEN, MAX_LEN, MAX_SCENE = 61.0, 72.0, 6.0   # TikTok monetization needs >60 s; keep every shot short
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TRANS = ["punch", "whip", "glitch", "zoom"]
 
 BG = (14, 22, 33); WHITE = (245, 242, 234); AMBER = (242, 177, 52); RED = (210, 58, 46)
 PAPER = (239, 230, 210); INK = (40, 36, 32); INKRED = (150, 30, 22)
@@ -465,8 +468,212 @@ def s_end(sc, t, D, ctx):
     if t > D - 0.4: d.rectangle([0, 0, W, H], fill=(0, 0, 0, int(255 * prog(t, D - 0.4, D))))
     return img, d
 
+# ---------------- icons (Tabler, MIT; fetched by setup.sh into pipeline/icons_src) ----------------
+_ICON = {}
+def icon_img(name, size, c=WHITE, outline=False):
+    key = (name, int(size), tuple(c), outline)
+    if key not in _ICON:
+        import cairosvg, io
+        base = os.path.join(HERE, "icons_src")
+        f = os.path.join(base, "filled", name + ".svg")
+        if outline or not os.path.exists(f): f = os.path.join(base, "outline", name + ".svg")
+        if not os.path.exists(f): raise SystemExit(f"unknown icon '{name}' (ls pipeline/icons_src/outline)")
+        hexc = "#%02x%02x%02x" % tuple(c[:3])
+        svg = open(f).read().replace("currentColor", hexc).replace('stroke-width="2"', 'stroke-width="2.1"')
+        png = cairosvg.svg2png(bytestring=svg.encode(), output_width=int(size), output_height=int(size))
+        im = Image.open(io.BytesIO(png)).convert("RGBA")
+        # soft dark halo so icons read on any background
+        halo = Image.new("RGBA", (im.width + 40, im.height + 40), (0, 0, 0, 0)); halo.paste(im, (20, 20), im)
+        a = halo.getchannel("A").filter(ImageFilter.GaussianBlur(9)).point(lambda v: min(255, int(v * 1.3)))
+        out = Image.new("RGBA", halo.size, (0, 0, 0, 0)); out.putalpha(a.point(lambda v: int(v * 0.75)))
+        out.alpha_composite(halo)
+        _ICON[key] = out
+    return _ICON[key]
+
+def overlay_icons(img, sc, t, D):
+    """Pop-in icons on any scene: "icons": [{"name","x","y","size","color","at","label"}], x/y are 0-1 of the frame."""
+    d = ImageDraw.Draw(img, "RGBA")
+    for k, ic in enumerate(sc.get("icons", [])):
+        a0 = ic.get("at", 0.1) * D; p = prog(t, a0, a0 + 0.3)
+        if p <= 0: continue
+        size = ic.get("size", 200); cc = col(ic.get("color", "a"), AMBER)
+        x, y = ic.get("x", 0.5) * W, ic.get("y", 0.5) * H + math.sin(t * 2.4 + k) * 8
+        paste(img, icon_img(ic["name"], size, cc, ic.get("outline", False)), x, y, eback(p), clamp(p * 3))
+        if ic.get("label"):
+            label(d, (x, y + size * 0.62 + 30), ic["label"], prog(t, a0 + 0.15, a0 + 0.45), WHITE, ic.get("label_size", 40))
+
+def header(d, text, y, a=1.0, c=AMBER):
+    if text: d.text((W / 2, y), text, font=F(FXB, fit_font(d, text, FXB, 50, 1000)), fill=rgba(c, a), anchor="mm")
+
+# ---------------- v2 scene types ----------------
+def s_icon(sc, t, D, ctx):
+    """Hero beat: one big icon + big word. Fast, punchy filler between heavier scenes."""
+    img = glowbg(sc, t, 700, default=sc.get("color", "a")); d = ImageDraw.Draw(img, "RGBA"); atmosphere(d, sc.get("atmosphere"), t)
+    header(d, sc.get("header"), 330, eout(prog(t, 0, 0.3)))
+    cc = col(sc.get("color", "a"), AMBER); p = prog(t, 0.0, 0.35)
+    paste(img, icon_img(sc["icon"], 440, cc, sc.get("outline", False)), W / 2, 690 + math.sin(t * 2) * 10, 0.4 + 0.6 * eback(p), clamp(p * 3))
+    d = ImageDraw.Draw(img, "RGBA")
+    if sc.get("text"):
+        q = eout(prog(t, 0.2, 0.5)); sz = fit_font(d, sc["text"], FBLACK, 150, 1000)
+        d.text((W / 2, 1030), sc["text"], font=F(FBLACK, sz * (1.25 - 0.25 * q)), fill=rgba(WHITE, q), anchor="mm", stroke_width=6, stroke_fill=(0, 0, 0, int(220 * q)))
+    if sc.get("sub"):
+        d.text((W / 2, 1140), sc["sub"], font=F(FXB, fit_font(d, sc["sub"], FXB, 50, 1000)), fill=rgba(cc, prog(t, 0.45, 0.8)), anchor="mm")
+    overlay_stamp(img, sc, t, D, ctx, 760)
+    return img, d
+
+def s_units(sc, t, D, ctx):
+    """Unit chart: N icons fill in one by one (e.g. 21 people). Optional highlight of the last k in red."""
+    img = glowbg(sc, t, 760, default=sc.get("color", "r")); d = ImageDraw.Draw(img, "RGBA")
+    header(d, sc.get("header"), 300, eout(prog(t, 0, 0.3)))
+    n = int(sc["count"]); per = sc.get("per_row") or max(4, min(10, math.ceil(math.sqrt(n * 1.3))))
+    rows = math.ceil(n / per); cell = min(980 / per, 640 / rows); sz = cell * 0.82
+    top = 690 - rows * cell / 2 + cell / 2; cc = col(sc.get("color", "w")); hl = sc.get("highlight", {})
+    a0, a1 = 0.15, max(0.6, D * sc.get("fill", 0.55))
+    for i in range(n):
+        r_, c_ = divmod(i, per); rowlen = min(per, n - r_ * per)
+        x = W / 2 + (c_ - (rowlen - 1) / 2) * cell; y = top + r_ * cell
+        st = a0 + (a1 - a0) * i / max(1, n); p = prog(t, st, st + 0.18)
+        if p <= 0: continue
+        ic = col(hl.get("color", "r"), RED) if hl and i >= n - hl.get("count", 0) else cc
+        paste(img, icon_img(sc.get("icon", "man"), sz, ic), x, y, eback(p))
+    d = ImageDraw.Draw(img, "RGBA")
+    shown = int(n * clamp((t - a0) / (a1 - a0)))
+    if sc.get("big", True):
+        txt = sc.get("prefix", "") + f"{shown:,}" + sc.get("suffix", "")
+        d.text((W / 2, top + rows * cell + 40), txt, font=F(FBLACK, fit_font(d, sc.get("prefix", "") + f"{n:,}" + sc.get("suffix", ""), FBLACK, 130, 1000)),
+               fill=col(sc.get("big_color", sc.get("color", "w"))), anchor="mm", stroke_width=6, stroke_fill=(0, 0, 0))
+    if sc.get("sub"):
+        d.text((W / 2, top + rows * cell + 150), sc["sub"], font=F(FXB, fit_font(d, sc["sub"], FXB, 46, 1000)), fill=rgba(WHITE, prog(t, a1, a1 + 0.4)), anchor="mm")
+    overlay_stamp(img, sc, t, D, ctx, 1150)
+    return img, d
+
+def s_compare(sc, t, D, ctx):
+    """Bars that grow side by side to show scale: items [{label, value, icon, color, text}]."""
+    img = glowbg(sc, t, 760); d = ImageDraw.Draw(img, "RGBA")
+    header(d, sc.get("header"), 270, eout(prog(t, 0, 0.3)))
+    items = sc["items"][:4]; n = len(items); vmax = max(i["value"] for i in items)
+    base, hmax = 1110, 560; slot = 1000 / n; bw = min(220, slot * 0.62)
+    d.line([(60, base), (W - 60, base)], fill=(140, 160, 180), width=4)
+    for k, it in enumerate(items):
+        cx = 40 + slot * (k + 0.5); a0 = 0.15 + k * min(0.5, D * 0.18); p = eout(prog(t, a0, a0 + 0.55))
+        if p <= 0: continue
+        h = hmax * it["value"] / vmax * p; cc = col(it.get("color", "a" if k == n - 1 else "w"))
+        d.rounded_rectangle([cx - bw / 2, base - h, cx + bw / 2, base], radius=12, fill=rgba(cc, 0.9))
+        if it.get("icon"): paste(img, icon_img(it["icon"], min(150, bw * 0.8), cc), cx, base - h - 95, 1.0, p)
+        d = ImageDraw.Draw(img, "RGBA")
+        vt = it.get("text", f"{it['value']:g}{sc.get('unit', '')}")
+        if p > 0.6: d.text((cx, base - h + 50 if h > 120 else base - h - 200), vt, font=F(FBLACK, fit_font(d, vt, FBLACK, 60, bw + 40)), fill=(14, 22, 33) if h > 120 else WHITE, anchor="mm")
+        d.text((cx, base + 50), it["label"], font=F(FXB, fit_font(d, it["label"], FXB, 36, slot - 20)), fill=rgba(WHITE, p), anchor="mm")
+    overlay_stamp(img, sc, t, D, ctx, 1180)
+    return img, d
+
+def s_split(sc, t, D, ctx):
+    """Two panels side by side (cause/effect, before/after, expectation/reality)."""
+    img = glowbg(sc, t, 760); d = ImageDraw.Draw(img, "RGBA")
+    header(d, sc.get("header"), 330, eout(prog(t, 0, 0.3)))
+    for k, side in enumerate(("left", "right")):
+        pn = sc[side]; a0 = 0.1 if k == 0 else sc.get("right_at", 0.45) * D; p = eout(prog(t, a0, a0 + 0.35))
+        if p <= 0: continue
+        cx = (318 if k == 0 else 762) + (1 - p) * (-500 if k == 0 else 500); cc = col(pn.get("color", "w" if k == 0 else "a"))
+        d.rounded_rectangle([cx - 196, 470, cx + 196, 1060], radius=26, fill=(255, 255, 255, 18), outline=rgba(cc, 0.8), width=4)
+        if pn.get("title"): d.text((cx, 530), pn["title"], font=F(FXB, fit_font(d, pn["title"], FXB, 40, 360)), fill=cc, anchor="mm")
+        if pn.get("icon"): paste(img, icon_img(pn["icon"], 240, cc), cx, 740)
+        d = ImageDraw.Draw(img, "RGBA")
+        for j, ln in enumerate(wrap(pn.get("text", ""), 14)[:3]):
+            d.text((cx, 940 + j * 52), ln, font=F(FBLACK, fit_font(d, ln, FBLACK, 48, 360)), fill=WHITE, anchor="mm")
+    if sc.get("mid"):
+        q = eback(prog(t, sc.get("right_at", 0.45) * D, sc.get("right_at", 0.45) * D + 0.3))
+        if q > 0: d.ellipse([540 - 60 * q, 765 - 60 * q, 540 + 60 * q, 765 + 60 * q], fill=RED); d.text((540, 765), sc["mid"], font=F(FBLACK, 44 * q + 1), fill=WHITE, anchor="mm")
+    overlay_stamp(img, sc, t, D, ctx, 1160)
+    return img, d
+
+_PHOTO = {}
+def load_photo(path, grade):
+    key = (path, grade)
+    if key not in _PHOTO:
+        full = path if os.path.isabs(path) else os.path.join(ROOT, path)
+        if not os.path.exists(full): raise SystemExit(f"photo not found: {full}")
+        im = Image.open(full).convert("RGB")
+        if grade in ("bw", "sepia"):
+            g = im.convert("L"); g = Image.eval(g, lambda v: int(clamp((v - 128) * 1.18 + 128, 0, 255)))
+            im = Image.merge("RGB", (g, g, g)) if grade == "bw" else Image.merge("RGB", (g.point(lambda v: min(255, int(v * 1.07 + 10))), g.point(lambda v: int(v * 0.97 + 4)), g.point(lambda v: int(v * 0.82))))
+        sc_ = max(W * 1.25 / im.width, H * 1.0 / im.height)   # cover the frame with room to pan
+        im = im.resize((int(im.width * sc_) + 1, int(im.height * sc_) + 1), Image.LANCZOS)
+        _PHOTO[key] = im
+    return _PHOTO[key]
+
+_VIG = None
+def vignette():
+    global _VIG
+    if _VIG is None:
+        y, x = np.mgrid[0:H, 0:W]; dd = np.sqrt(((x - W / 2) / (W * 0.62)) ** 2 + ((y - H / 2) / (H * 0.6)) ** 2)
+        a = np.clip((dd - 0.55) * 1.6, 0, 0.85)
+        a = np.maximum(a, np.clip((y - H * 0.6) / (H * 0.3), 0, 0.7))           # darken lower third for captions
+        a = np.maximum(a, np.clip((H * 0.17 - y) / (H * 0.17), 0, 0.6))         # and the top for the header
+        _VIG = Image.fromarray((a * 255).astype(np.uint8), "L")
+    return _VIG
+
+def s_photo(sc, t, D, ctx):
+    """Archival photo with Ken Burns move, film grain, vignette, optional circle callout and credit."""
+    im = load_photo(sc["image"], sc.get("grade", "sepia")); u = einout(t / D)
+    pan = sc.get("pan", "in"); fx, fy = sc.get("focus", [0.5, 0.5])
+    z = {"in": 1.0 + 0.22 * u, "out": 1.22 - 0.22 * u}.get(pan, 1.1)
+    vw, vh = im.width / z, im.width / z * H / W
+    if vh > im.height: vh = im.height; vw = vh * W / H
+    cx, cy = fx * im.width, fy * im.height
+    if pan == "left": cx = im.width * (0.62 - 0.24 * u)
+    if pan == "right": cx = im.width * (0.38 + 0.24 * u)
+    if pan == "up": cy = im.height * (0.62 - 0.24 * u)
+    if pan == "down": cy = im.height * (0.38 + 0.24 * u)
+    cx = clamp(cx, vw / 2, im.width - vw / 2); cy = clamp(cy, vh / 2, im.height - vh / 2)
+    box = (cx - vw / 2, cy - vh / 2, cx + vw / 2, cy + vh / 2)
+    img = im.resize((W, H), Image.BILINEAR, box=box)
+    img.paste((0, 0, 0), (0, 0), vignette())
+    rng = np.random.default_rng(int(t * 30))   # film grain
+    g = rng.integers(-14, 15, (H // 4, W // 4), dtype=np.int16).repeat(4, 0).repeat(4, 1)[..., None]
+    img = Image.fromarray(np.clip(np.asarray(img, np.int16) + g, 0, 255).astype(np.uint8))
+    d = ImageDraw.Draw(img, "RGBA")
+    if sc.get("header"): header(d, sc["header"], 230, eout(prog(t, 0.1, 0.4)))
+    ci = sc.get("circle")
+    if ci:   # hand-drawn ring around a point of the photo (coords are 0-1 of the photo)
+        a0 = ci.get("at", 0.35) * D; p = eout(prog(t, a0, a0 + 0.45))
+        if p > 0:
+            px = (ci["x"] * im.width - box[0]) / vw * W; py = (ci["y"] * im.height - box[1]) / vh * H; r = ci.get("r", 120)
+            d.arc([px - r, py - r * 0.85, px + r, py + r * 0.85], -100, -100 + 380 * p, fill=RED, width=10)
+            if ci.get("label") and p > 0.9: label(d, (px, py + r + 40), ci["label"], prog(t, a0 + 0.4, a0 + 0.7), WHITE, 40)
+    if sc.get("credit"): d.text((W - 130, 1640), sc["credit"], font=F(FBOLD, 26), fill=(220, 220, 220, 150), anchor="rm")
+    overlay_stamp(img, sc, t, D, ctx, 1080)
+    return img, d
+
+# ---------------- camera, beats and transitions ----------------
+FRAMES = [(0.0, 0, 0), (0.07, -28, -24), (0.035, 30, 18), (0.09, 0, -34)]
+
+def glitch(img, t, amt):
+    a = np.asarray(img).copy(); rng = np.random.default_rng(int(t * 1000) % 99991); s = int(28 * amt) + 2
+    a[..., 0] = np.roll(a[..., 0], s, 1); a[..., 2] = np.roll(a[..., 2], -s, 1)
+    for _ in range(int(9 * amt) + 1):
+        y0 = rng.integers(0, H - 40); h = rng.integers(12, 140); a[y0:y0 + h] = np.roll(a[y0:y0 + h], int(rng.integers(-120, 120) * amt), 1)
+    return Image.fromarray(a)
+
+def whip(img, dx):
+    a = np.asarray(img, np.float32); n = 7; L = int(abs(dx) * 0.35) + 1
+    acc = sum(np.roll(a, int(dx) + int(L * k / n) * (1 if dx >= 0 else -1), 1) for k in range(n)) / n
+    return Image.fromarray(acc.astype(np.uint8))
+
+def zblur(img, amt):
+    if amt < 0.05: return img
+    sm = img.resize((W // 4, H // 4), Image.BILINEAR).filter(ImageFilter.GaussianBlur(8 * amt))
+    return Image.blend(img, sm.resize((W, H), Image.BILINEAR), clamp(amt))
+
+def camera(img, s, ox, oy):
+    if s <= 1.001 and not ox and not oy: return img
+    s = max(s, 1.0); zw, zh = int(W * s), int(H * s); mx, my = (zw - W) / 2, (zh - H) / 2
+    x0 = clamp(mx + ox * s, 0, zw - W); y0 = clamp(my + oy * s, 0, zh - H)
+    return img.resize((W, H), Image.BILINEAR, box=(x0 / s, y0 / s, (x0 + W) / s, (y0 + H) / s))
+
 SCENES = {"hook": s_hook, "map": s_map, "date": s_date, "card": s_card, "quote": s_quote,
-          "counter": s_counter, "timeline": s_timeline, "end": s_end}
+          "counter": s_counter, "timeline": s_timeline, "end": s_end,
+          "icon": s_icon, "units": s_units, "compare": s_compare, "split": s_split, "photo": s_photo}
 
 # ---------------- pipeline ----------------
 def tts(spec, outdir):
@@ -478,7 +685,7 @@ def tts(spec, outdir):
         row = []
         for gi, seg in enumerate(sc["segments"]):
             import hashlib
-            f = os.path.join(outdir, "vo_" + hashlib.md5(seg["vo"].encode()).hexdigest()[:12] + ".wav")
+            f = os.path.join(outdir, "vo_" + hashlib.md5(f"{VOICE}{SPEED}{seg['vo']}".encode()).hexdigest()[:12] + ".wav")
             if not os.path.exists(f):
                 if k is None: k = Kokoro(os.path.join(mdir, "kokoro-v1.0.onnx"), os.path.join(mdir, "voices-v1.0.bin"))
                 a, sr = k.create(seg["vo"], voice=VOICE, speed=SPEED, lang="en-gb"); sf.write(f, a, sr)
@@ -512,33 +719,61 @@ def glowbg(sc, t, y, base=None, default="a"):
     if not sc.get("atmosphere"): atmosphere(ImageDraw.Draw(img, "RGBA"), "dust", t)
     return img
 
-def frame(sc, t, D, ctx, caps, gstart=0.0, total=1.0):
+def frame(sc, t, D, ctx, caps, gstart=0.0, total=1.0, beats=(), tin="punch", tout=None):
     img, _ = SCENES[sc["type"]](sc, t, D, ctx)
-    # constant motion: slow push-in on every scene, plus a zoom punch on each cut
-    s = 1.0 + 0.045 * (t / D)
-    if not sc.get("first"): s += 0.07 * (1 - eout(prog(t, 0, 0.3)))
-    if s > 1.001:
-        zw, zh = int(W * s), int(H * s)
-        img = img.resize((zw, zh), Image.BILINEAR).crop(((zw - W) // 2, (zh - H) // 2, (zw - W) // 2 + W, (zh - H) // 2 + H))
+    overlay_icons(img, sc, t, D)
+    # camera: steady push-in, plus a re-frame + punch on every new sentence ("beat") so the shot never sits still
+    k = sum(1 for b in beats if t >= b)
+    cur, prev = FRAMES[k % 4], FRAMES[(k - 1) % 4]
+    e = eout(prog(t, beats[k - 1], beats[k - 1] + 0.28)) if k else 1.0
+    z, ox, oy = (prev[i] + (cur[i] - prev[i]) * e for i in range(3))
+    s = 1.0 + 0.08 * (t / D) + z + (0.05 * (1 - eout(prog(t, beats[k - 1], beats[k - 1] + 0.25))) if k else 0)
+    sh = sc.get("shake")
+    if sh:
+        a0 = sh.get("at", 0) * D; amp = sh.get("amp", 26) * (1 - prog(t, a0, a0 + sh.get("dur", 0.5)))
+        if t >= a0 and amp > 0: ox += math.sin(t * 97) * amp; oy += math.cos(t * 83) * amp; s += 0.03
+    first = sc.get("first")
+    if not first:   # entry transition
+        if tin == "punch": s += 0.09 * (1 - eout(prog(t, 0, 0.3)))
+        elif tin == "zoom": s += 0.45 * (1 - eout(prog(t, 0, 0.24)))
+    if tout == "zoom": s += 0.35 * prog(t, D - 0.14, D) ** 2
+    img = camera(img, s, ox, oy)
+    if not first:
+        if tin == "zoom" and t < 0.24: img = zblur(img, 1 - prog(t, 0, 0.24))
+        elif tin == "whip" and t < 0.2: img = whip(img, W * 0.55 * (1 - eout(prog(t, 0, 0.2))))
+        elif tin == "glitch" and t < 0.18: img = glitch(img, t, 1 - prog(t, 0, 0.18))
+    if tout == "zoom" and t > D - 0.14: img = zblur(img, prog(t, D - 0.14, D))
+    elif tout == "whip" and t > D - 0.12: img = whip(img, -W * 0.55 * prog(t, D - 0.12, D) ** 2)
+    elif tout == "glitch" and t > D - 0.1: img = glitch(img, t, prog(t, D - 0.1, D))
     d = ImageDraw.Draw(img, "RGBA")
-    if not sc.get("first") and t < 0.12:
+    if not first and tin == "punch" and t < 0.12:
         d.rectangle([0, 0, W, H], fill=(255, 255, 255, int(120 * (1 - t / 0.12))))
     caption(d, caps, t)
     gp = clamp((gstart + t) / total)
     d.rectangle([0, 0, W, 9], fill=(0, 0, 0, 90)); d.rectangle([0, 0, int(W * gp), 9], fill=AMBER)
     return img
 
+def transitions(spec):
+    out = []
+    for i, sc in enumerate(spec["scenes"]):
+        out.append(sc.get("trans", "zoom" if sc["type"] == "end" else TRANS[i % len(TRANS)]))
+    return out
+
+def beats_of(pl):
+    return [a for a, *_ in pl["segs"][1:]]
+
 def scene_caps(sc, pl):
     return [] if sc["type"] in ("hook", "end") else kinetic_chunks(pl["segs"])
 
 def render_scene(args):
-    i, sc, pl, outdir, total = args
+    i, sc, pl, outdir, total, tin, tout = args
     D = pl["dur"]; caps = scene_caps(sc, pl)
     tmp = os.path.join(outdir, f"scene{i:02d}.tmp.mp4"); fin = os.path.join(outdir, f"scene{i:02d}.mp4")
     pr = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
                            "-i", "-", "-c:v", "libx264", "-preset", "veryfast", "-crf", "19", "-pix_fmt", "yuv420p", "-g", "60", tmp], stdin=subprocess.PIPE)
     ctx = {}
-    for k in range(int(round(D * FPS))): pr.stdin.write(frame(sc, k / FPS, D, ctx, caps, pl["start"], total).tobytes())
+    bt = beats_of(pl)
+    for k in range(int(round(D * FPS))): pr.stdin.write(frame(sc, k / FPS, D, ctx, caps, pl["start"], total, bt, tin, tout).tobytes())
     pr.stdin.close()
     if pr.wait() != 0: raise SystemExit(f"scene {i} failed")
     os.replace(tmp, fin); return fin
@@ -547,9 +782,10 @@ def preview(spec, plan, outdir, total):
     ims = []
     for sc, pl in zip(spec["scenes"], plan):
         D = pl["dur"]; caps = scene_caps(sc, pl)
-        ims.append(frame(sc, D * 0.8, D, {}, caps, pl["start"], total).resize((270, 480)))
-    sheet = Image.new("RGB", (270 * min(6, len(ims)), 480 * ((len(ims) + 5) // 6)))
-    for k, im in enumerate(ims): sheet.paste(im, ((k % 6) * 270, (k // 6) * 480))
+        ims.append(frame(sc, D * 0.8, D, {}, caps, pl["start"], total, beats_of(pl)).resize((270, 480)))
+    cols = 8
+    sheet = Image.new("RGB", (270 * min(cols, len(ims)), 480 * ((len(ims) + cols - 1) // cols)))
+    for k, im in enumerate(ims): sheet.paste(im, ((k % cols) * 270, (k // cols) * 480))
     sheet.save(os.path.join(outdir, "preview.jpg"), quality=85)
 
 def soundtrack(spec, plan, total, outdir):
@@ -582,8 +818,8 @@ def soundtrack(spec, plan, total, outdir):
         return (tone * .25 + bp(rng.standard_normal(n), 800, 6000) * .5) * k ** 2.5 * .5
     def typing(buf, t0, chars, dur):
         for c in range(chars): add(buf, click(), t0 + dur * c / max(1, chars) + rng.uniform(-.01, .01), .55)
-    fx = np.zeros(N)
-    for sc, pl in zip(spec["scenes"], plan):
+    fx = np.zeros(N); tr = transitions(spec)
+    for si, (sc, pl) in enumerate(zip(spec["scenes"], plan)):
         s0, D, ty = pl["start"], pl["dur"], sc["type"]
         add(fx, whoosh(.6), s0 - .2, .7)
         if s0 > 0: add(fx, thud(.55), s0)   # impact on every cut
@@ -611,13 +847,32 @@ def soundtrack(spec, plan, total, outdir):
         elif ty == "date" and sc.get("atmosphere") == "night_sea":
             n = int(D * SR); tt = np.arange(n) / SR
             add(fx, lp(rng.standard_normal(n), 600) * (.55 + .45 * np.sin(2 * np.pi * .22 * tt)) * .45 * np.minimum(1, tt / .6), s0)
+        elif ty == "icon":
+            add(fx, thud(1.0), s0 + .05)
+        elif ty == "units":
+            n = int(sc["count"]); a1 = max(.6, D * sc.get("fill", .55))
+            for k in range(min(n, 40)): add(fx, click() * 2.5, s0 + .15 + (a1 - .15) * k / min(n, 40), .7)
+            add(fx, thud(.9), s0 + a1)
+        elif ty == "compare":
+            for k in range(len(sc["items"][:4])):
+                a0 = .15 + k * min(.5, D * .18); add(fx, riser(.5), s0 + a0, .5); add(fx, thud(.7 + .2 * k), s0 + a0 + .5)
+        elif ty == "split":
+            add(fx, whoosh(.4), s0 + .05, .7); ra = sc.get("right_at", .45) * D; add(fx, whoosh(.4), s0 + ra, .7)
+            if sc.get("mid"): add(fx, thud(1.0), s0 + ra + .1)
+        elif ty == "photo" and sc.get("circle"):
+            add(fx, whoosh(.45), s0 + sc["circle"].get("at", .35) * D, .6)
+        if sc.get("shake"): add(fx, thud(1.4), s0 + sc["shake"].get("at", 0) * D)
+        for ic in sc.get("icons", []): add(fx, ping() * .6, s0 + ic.get("at", .1) * D)
+        for a, *_ in pl["segs"][1:]: add(fx, whoosh(.3), s0 + a - .12, .35)   # soft swish on every beat
+        if tr[si] == "glitch" and s0 > 0:
+            n = int(.18 * SR); add(fx, (np.sign(rng.standard_normal(n)) * (rng.random(n) < .3)) * env(n, .001, .06) * .35, s0 - .05)
         if sc.get("stamp"):
             ts = s0 + sc["stamp"].get("at", .55) * D + .12
             add(fx, riser(.7), ts - .7, .7); add(fx, stamp(), ts, 1.2)
     tt = np.arange(N) / SR
     def pad(f, a, l): return a * np.sin(2 * np.pi * f * tt + .3 * np.sin(2 * np.pi * .07 * tt)) * (.6 + .4 * np.sin(2 * np.pi * l * tt))
     mus = pad(55, .22, .05) + pad(82.41, .14, .07) + pad(110, .10, .09) + pad(130.81, .06, .11) + pad(220.2, .025, .13) + pad(659.3, .012, .2) + pad(523.3, .01, .17)
-    beat = np.zeros(N); kick = thud(.5)[:int(.3 * SR)]; bt = 60 / 92; k = 0.0
+    beat = np.zeros(N); kick = thud(.5)[:int(.3 * SR)]; bt = 60 / 104; k = 0.0
     hat = hp(rng.standard_normal(int(.04 * SR)), 6000) * env(int(.04 * SR), .001, .012)
     while k < total - 2:
         add(beat, kick, k, .4 if int(k / bt) % 4 else .55); add(beat, hat, k + bt / 2, .12); k += bt
@@ -637,9 +892,15 @@ def make(spec_path, outdir):
     spec["scenes"][0]["first"] = True
     timing = tts(spec, outdir); plan, total = layout(spec, timing)
     print(f"planned length {total:.1f}s")
+    for i, (sc, pl) in enumerate(zip(spec["scenes"], plan)):
+        if sc["type"] != "end" and pl["dur"] > MAX_SCENE + 1.0 * (len(pl["segs"]) - 1): print(f"WARNING scene {i} ({sc['type']}) is {pl['dur']:.1f}s - split it (max {MAX_SCENE:.0f}s)")
+    if total < MIN_LEN or total > MAX_LEN:
+        print(f"LENGTH FAIL {total:.1f}s - must be {MIN_LEN:.0f}-{MAX_LEN:.0f}s (target 62-70). Add or cut narration."); sys.exit(2)
     preview(spec, plan, outdir, total)
-    with Pool(2) as pool:
-        files = pool.map(render_scene, [(i, sc, pl, outdir, total) for i, (sc, pl) in enumerate(zip(spec["scenes"], plan))])
+    tr = transitions(spec)
+    with Pool(os.cpu_count() or 2) as pool:
+        files = pool.map(render_scene, [(i, sc, pl, outdir, total, tr[i], tr[i + 1] if i + 1 < len(tr) else None)
+                                        for i, (sc, pl) in enumerate(zip(spec["scenes"], plan))])
     lst = os.path.join(outdir, "list.txt")
     with open(lst, "w") as fh:
         for f in files: fh.write(f"file '{f}'\n")
@@ -653,6 +914,7 @@ def make(spec_path, outdir):
     os.replace(tmp, final)
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", final], capture_output=True, text=True).stdout)
     print(f"DONE {final} {dur:.1f}s")
+    if dur < MIN_LEN: print(f"LENGTH FAIL final video {dur:.1f}s < {MIN_LEN:.0f}s"); sys.exit(2)
 
 if __name__ == "__main__":
     make(sys.argv[1], sys.argv[2])

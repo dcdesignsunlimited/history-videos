@@ -1,6 +1,6 @@
 # Daily history short — runbook
 
-Each run makes ONE ~70-second narrated, captioned history video and schedules it on
+Each run makes ONE 62–70-second narrated, captioned history video and schedules it on
 TikTok (@historicalleaders), Instagram (@semper_lit) and YouTube Shorts via Metricool.
 
 ## 1. Setup
@@ -19,6 +19,12 @@ TikTok (@historicalleaders), Instagram (@semper_lit) and YouTube Shorts via Metr
 - Quotes on screen must be real and verified. Never invent quotes, headlines or documents' wording
   presented as real — card/quote text must be either verified wording or clearly a summary label.
 
+### 3b. Archival photos (when the network allows)
+- Look for public-domain or CC0 photos of the actual event, place or object (Wikimedia Commons, Library of Congress).
+  Check the file page's license; skip anything else. No portraits of named people — scenes, places, objects, crowds.
+- Save to `assets/<slug>/` (downscale to ~1600 px wide, JPEG), look at each image to confirm it shows what you say,
+  and put the source in the scene's `credit`. If photos can't be fetched, build the video from the other graphics.
+
 ## 4. Write the spec
 - Follow `pipeline/SPEC_FORMAT.md`. Save as `stories/YYYY-MM-DD-slug.json`.
 - Narration: George (British male), plain and gripping, short sentences.
@@ -29,8 +35,9 @@ TikTok (@historicalleaders), Instagram (@semper_lit) and YouTube Shorts via Metr
    "In 1943, a dead man fooled Hitler."). Never open with "In the year...", "Let me tell you..." or a date alone.
    Hook `lines` are 3–4 short lines, 1–3 words each; the last line is the payoff in amber.
    Follow the hook line with a 2–4 word credibility kicker when it fits ("This really happened.").
-2. **Change the picture every 4–7 seconds.** 8–11 scenes; no scene longer than ~10 s; mix at least
-   4 different scene types; use a `map` whenever geography matters; use `stamp`s and `counter`s for reveals.
+2. **Change the picture every 2–5 seconds.** 14–18 scenes, one sentence each; no shot longer than ~6 s; mix at least
+   6 scene types; every sentence gets its own graphic (`icon`, `units`, `compare`, `split`, `photo`, `counter`, `map`...).
+   Use a `map` whenever geography matters, `stamp`s / `shake` for reveals, and 1–3 archival `photo`s when available (section 3b).
 3. **Open loop around the middle**: one line that promises a twist still to come
    ("But the strangest part came after." / "And that wasn't even the worst of it.") — only if true.
 4. **Concrete numbers beat adjectives**: "25 feet high at 35 miles an hour", not "huge and fast".
@@ -43,7 +50,7 @@ TikTok (@historicalleaders), Instagram (@semper_lit) and YouTube Shorts via Metr
 
 ## 5. Render and check
     python3 pipeline/engine.py stories/<file>.json work/<slug>
-- Length must be 65–75 s; fix and re-render if not.
+- Length must be 62–70 s (the engine refuses under 61 s); fix and re-render if not.
 - Look at `work/<slug>/preview.jpg`; fix overlapping or cut-off text.
 
 ## 6. Publish the file

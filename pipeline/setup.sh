@@ -2,7 +2,7 @@
 # Installs everything engine.py needs in a fresh workspace. Safe to re-run.
 set -e
 cd "$(dirname "$0")"
-pip install --break-system-packages -q kokoro-onnx soundfile scipy numpy pillow 2>&1 | grep -v -i warning || true
+pip install --break-system-packages -q kokoro-onnx soundfile scipy numpy pillow cairosvg 2>&1 | grep -v -i warning || true
 mkdir -p models
 REL=https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0
 [ -s models/kokoro-v1.0.onnx ] || curl -sSL -o models/kokoro-v1.0.onnx $REL/kokoro-v1.0.onnx
@@ -13,5 +13,11 @@ if [ ! -f /usr/share/fonts/opentype/inter/Inter-Black.otf ]; then
   find $tmp -name 'Inter-*.otf' -exec cp {} /usr/share/fonts/opentype/inter/ \;
 fi
 [ -f /usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf ] || { echo "MISSING DejaVu fonts"; exit 1; }
+# Tabler icons (MIT) for icon/units/compare/split scenes and "icons" overlays
+if [ ! -f icons_src/outline/skull.svg ]; then
+  tmp=$(mktemp -d); (cd $tmp && npm pack -q @tabler/icons@3.24.0 >/dev/null && tar xzf tabler-icons-3.24.0.tgz)
+  rm -rf icons_src; mkdir -p icons_src; cp -r $tmp/package/icons/outline $tmp/package/icons/filled icons_src/; cp $tmp/package/LICENSE icons_src/ 2>/dev/null || true
+fi
+python3 -c "import cairosvg" || { echo "MISSING cairosvg (libcairo)"; exit 1; }
 command -v ffmpeg >/dev/null || { echo "MISSING ffmpeg"; exit 1; }
 echo "setup ok"
