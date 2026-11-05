@@ -2,54 +2,331 @@
  "slug": "great-molasses-flood-v2",
  "title": "The Great Molasses Flood",
  "scenes": [
-  {"type": "hook", "tag": "TRUE STORY · BOSTON, 1919",
-   "lines": [{"t": "A WAVE OF"}, {"t": "MOLASSES"}, {"t": "KILLED"}, {"t": "21 PEOPLE.", "c": "a"}],
-   "segments": [{"vo": "A wave of molasses once killed twenty-one people. This really happened.", "cap": ""}]},
-  {"type": "date", "big": "JANUARY 15, 1919", "sub": "EARLY AFTERNOON · BOSTON'S NORTH END",
-   "segments": [{"vo": "January fifteenth, nineteen nineteen. Boston's North End.", "cap": "January 15, 1919. Boston's North End."}]},
-  {"type": "map", "header": "BOSTON, MASSACHUSETTS", "bbox": [-74.5, 40.6, -68.5, 44.6],
-   "pins": [{"lon": -71.06, "lat": 42.36, "label": "NORTH END", "at": 0.1}],
-   "icons": [{"name": "building-factory-2", "x": 0.72, "y": 0.27, "size": 150, "at": 0.45}],
-   "segments": [{"vo": "Right by the harbor stood a giant steel tank."}]},
-  {"type": "compare", "header": "HOW BIG WAS IT?", "unit": " FT",
-   "items": [{"label": "A PERSON", "value": 6, "icon": "man", "text": "~6 FT"}, {"label": "THE TANK", "value": 50, "icon": "barrel", "text": "50 FT"}],
-   "segments": [{"vo": "Fifty feet tall, towering over the street.", "cap": "50 feet tall, towering over the street."}]},
-  {"type": "counter", "header": "INSIDE THE TANK", "value": 2.3, "suffix": " MILLION", "sub": "GALLONS OF MOLASSES",
-   "icons": [{"name": "droplets", "x": 0.5, "y": 0.17, "size": 170, "at": 0.05}],
-   "segments": [{"vo": "Inside, two point three million gallons of molasses.", "cap": "Inside: 2.3 million gallons of molasses."}]},
-  {"type": "icon", "icon": "building-factory", "text": "ALCOHOL", "sub": "FOR INDUSTRY AND MUNITIONS",
-   "segments": [{"vo": "It was going to be turned into industrial alcohol."}]},
-  {"type": "split", "header": "THE ONE PROBLEM", "right_at": 0.52, "mid": "→",
-   "left": {"title": "THE PROBLEM", "icon": "droplets", "text": "IT LEAKED"},
-   "right": {"title": "THE FIX", "icon": "paint", "text": "PAINT IT BROWN"},
-   "segments": [{"vo": "It leaked so badly that local kids filled pails with the drips."},
-                {"vo": "The fix? Paint the tank brown, so the leaks wouldn't show."}]},
-  {"type": "icon", "icon": "temperature-plus", "color": "r", "text": "OVER 40°F", "sub": "IN THE MIDDLE OF JANUARY",
-   "segments": [{"vo": "Then, in the middle of winter, the temperature jumped above forty degrees.", "cap": "Then, in the middle of winter, the temperature jumped above 40°F."}]},
-  {"type": "icon", "icon": "bomb", "color": "r", "text": "IT BURST.", "shake": {"at": 0.15, "dur": 0.7, "amp": 30}, "atmosphere": "dust",
-   "segments": [{"vo": "And early that afternoon, the tank burst apart."}]},
-  {"type": "counter", "header": "A WAVE OF MOLASSES", "value": 35, "suffix": " MPH", "sub": "THROUGH THE STREETS", "color": "a", "atmosphere": "dust",
-   "segments": [{"vo": "A wave of molasses raced through the streets at thirty-five miles an hour.", "cap": "A wave of molasses raced through the streets at 35 mph."}]},
-  {"type": "icon", "icon": "train", "text": "OFF THE TRACKS", "sub": "BOSTON'S ELEVATED RAILWAY",
-   "stamp": {"text": "WRECKED", "at": 0.55},
-   "segments": [{"vo": "It flattened buildings and knocked a train off the elevated railway."}]},
-  {"type": "units", "header": "THE TOLL", "count": 21, "icon": "man", "color": "r", "per_row": 7, "suffix": " DEAD", "big_color": "r", "sub": "ABOUT 150 INJURED",
-   "segments": [{"vo": "Twenty-one people died. About one hundred fifty were injured.", "cap": "21 people died. About 150 were injured."}]},
-  {"type": "icon", "icon": "ripple", "text": "BROWN HARBOR", "sub": "UNTIL THE SUMMER",
-   "segments": [{"vo": "Boston Harbor stayed brown until summer."}]},
-  {"type": "card", "header": "THE LAWSUIT", "photo": false,
-   "lines": ["PLAINTIFFS: 119", "DEFENDANT: U.S. INDUSTRIAL ALCOHOL CO."],
-   "stamp": {"text": "RESPONSIBLE", "at": 0.7},
-   "segments": [{"vo": "One hundred nineteen people sued, and the tank's owner was found responsible.", "cap": "119 people sued, and the tank's owner was found responsible."}]},
-  {"type": "counter", "header": "DAMAGES PAID", "value": 628000, "prefix": "$", "color": "a",
-   "icons": [{"name": "cash-banknote", "x": 0.5, "y": 0.17, "size": 170, "at": 0.05}],
-   "segments": [{"vo": "It paid six hundred twenty-eight thousand dollars.", "cap": "It paid $628,000."}]},
-  {"type": "icon", "icon": "certificate", "text": "NEW LAWS", "sub": "ENGINEERS MUST SIGN THE PLANS",
-   "segments": [{"vo": "And the disaster changed the law: engineers had to sign and seal their plans."}]},
-  {"type": "icon", "icon": "sun", "color": "a", "text": "STILL SWEET?", "sub": "FOR DECADES AFTER",
-   "segments": [{"vo": "For decades, locals said the area still smelled of molasses on hot days."}]},
-  {"type": "end", "lines": [{"t": "THE GREAT"}, {"t": "MOLASSES"}, {"t": "FLOOD.", "c": "a"}],
+  {
+   "type": "hook",
+   "tag": "TRUE STORY · BOSTON, 1919",
+   "lines": [
+    {
+     "t": "A WAVE OF"
+    },
+    {
+     "t": "MOLASSES"
+    },
+    {
+     "t": "KILLED"
+    },
+    {
+     "t": "21 PEOPLE.",
+     "c": "a"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "A wave of molasses once killed twenty-one people. This really happened.",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "type": "date",
+   "big": "JANUARY 15, 1919",
+   "sub": "EARLY AFTERNOON · BOSTON'S NORTH END",
+   "segments": [
+    {
+     "vo": "January fifteenth, nineteen nineteen. Boston's North End.",
+     "cap": "January 15, 1919. Boston's North End."
+    }
+   ]
+  },
+  {
+   "type": "map",
+   "header": "BOSTON, MASSACHUSETTS",
+   "bbox": [
+    -74.5,
+    40.6,
+    -68.5,
+    44.6
+   ],
+   "pins": [
+    {
+     "lon": -71.06,
+     "lat": 42.36,
+     "label": "NORTH END",
+     "at": 0.1
+    }
+   ],
+   "icons": [
+    {
+     "name": "building-factory-2",
+     "x": 0.72,
+     "y": 0.27,
+     "size": 150,
+     "at": 0.45
+    }
+   ],
+   "segments": [
+    {
+     "vo": "Right by the harbor stood a giant steel tank."
+    }
+   ]
+  },
+  {
+   "type": "compare",
+   "header": "HOW BIG WAS IT?",
+   "unit": " FT",
+   "items": [
+    {
+     "label": "A PERSON",
+     "value": 6,
+     "icon": "man",
+     "text": "~6 FT"
+    },
+    {
+     "label": "THE TANK",
+     "value": 50,
+     "icon": "barrel",
+     "text": "50 FT"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "Fifty feet tall, towering over the street.",
+     "cap": "50 feet tall, towering over the street."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "INSIDE THE TANK",
+   "value": 2.3,
+   "suffix": " MILLION",
+   "sub": "GALLONS OF MOLASSES",
+   "icons": [
+    {
+     "name": "droplets",
+     "x": 0.5,
+     "y": 0.17,
+     "size": 170,
+     "at": 0.05
+    }
+   ],
+   "segments": [
+    {
+     "vo": "Inside, two point three million gallons of molasses.",
+     "cap": "Inside: 2.3 million gallons of molasses."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "building-factory",
+   "text": "ALCOHOL",
+   "sub": "FOR INDUSTRY AND MUNITIONS",
+   "segments": [
+    {
+     "vo": "It was going to be turned into industrial alcohol."
+    }
+   ]
+  },
+  {
+   "type": "split",
+   "header": "THE ONE PROBLEM",
+   "right_at": 0.52,
+   "mid": "→",
+   "left": {
+    "title": "THE PROBLEM",
+    "icon": "droplets",
+    "text": "IT LEAKED"
+   },
+   "right": {
+    "title": "THE FIX",
+    "icon": "paint",
+    "text": "PAINT IT BROWN"
+   },
+   "segments": [
+    {
+     "vo": "It leaked so badly that local kids filled pails with the drips."
+    },
+    {
+     "vo": "The fix? Paint the tank brown, so the leaks wouldn't show."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "temperature-plus",
+   "color": "r",
+   "text": "OVER 40°F",
+   "sub": "IN THE MIDDLE OF JANUARY",
+   "segments": [
+    {
+     "vo": "Then, in the middle of winter, the temperature jumped above forty degrees.",
+     "cap": "Then, in the middle of winter, the temperature jumped above 40°F."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "bomb",
+   "color": "r",
+   "text": "IT BURST.",
+   "shake": {
+    "at": 0.15,
+    "dur": 0.7,
+    "amp": 30
+   },
+   "atmosphere": "dust",
+   "segments": [
+    {
+     "vo": "And early that afternoon, the tank burst apart."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "A WAVE OF MOLASSES",
+   "value": 35,
+   "suffix": " MPH",
+   "sub": "THROUGH THE STREETS",
+   "color": "a",
+   "atmosphere": "dust",
+   "segments": [
+    {
+     "vo": "A wave of molasses raced through the streets at thirty-five miles an hour.",
+     "cap": "A wave of molasses raced through the streets at 35 mph."
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/great-molasses-flood-v2/2.jpg",
+   "pan": "left",
+   "header": "THE ELEVATED RAILWAY",
+   "credit": "Photo: Wikimedia Commons (public domain)",
+   "segments": [
+    {
+     "vo": "It flattened buildings and knocked a train off the elevated railway."
+    }
+   ]
+  },
+  {
+   "type": "units",
+   "header": "THE TOLL",
+   "count": 21,
+   "icon": "man",
+   "color": "r",
+   "per_row": 7,
+   "suffix": " DEAD",
+   "big_color": "r",
+   "sub": "ABOUT 150 INJURED",
+   "segments": [
+    {
+     "vo": "Twenty-one people died. About one hundred fifty were injured.",
+     "cap": "21 people died. About 150 were injured."
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/great-molasses-flood-v2/1.jpg",
+   "pan": "up",
+   "header": "THE NORTH END, JANUARY 1919",
+   "credit": "Photo: Boston Public Library (public domain)",
+   "segments": [
+    {
+     "vo": "Boston Harbor stayed brown until summer."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "THE LAWSUIT",
+   "photo": false,
+   "lines": [
+    "PLAINTIFFS: 119",
+    "DEFENDANT: U.S. INDUSTRIAL ALCOHOL CO."
+   ],
+   "stamp": {
+    "text": "RESPONSIBLE",
+    "at": 0.7
+   },
+   "segments": [
+    {
+     "vo": "One hundred nineteen people sued, and the tank's owner was found responsible.",
+     "cap": "119 people sued, and the tank's owner was found responsible."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "DAMAGES PAID",
+   "value": 628000,
+   "prefix": "$",
+   "color": "a",
+   "icons": [
+    {
+     "name": "cash-banknote",
+     "x": 0.5,
+     "y": 0.17,
+     "size": 170,
+     "at": 0.05
+    }
+   ],
+   "segments": [
+    {
+     "vo": "It paid six hundred twenty-eight thousand dollars.",
+     "cap": "It paid $628,000."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "certificate",
+   "text": "NEW LAWS",
+   "sub": "ENGINEERS MUST SIGN THE PLANS",
+   "segments": [
+    {
+     "vo": "And the disaster changed the law: engineers had to sign and seal their plans."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "sun",
+   "color": "a",
+   "text": "STILL SWEET?",
+   "sub": "FOR DECADES AFTER",
+   "segments": [
+    {
+     "vo": "For decades, locals said the area still smelled of molasses on hot days."
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "lines": [
+    {
+     "t": "THE GREAT"
+    },
+    {
+     "t": "MOLASSES"
+    },
+    {
+     "t": "FLOOD.",
+     "c": "a"
+    }
+   ],
    "question": "Had you ever heard of this one?",
-   "segments": [{"vo": "The great molasses flood.", "cap": ""}, {"vo": "Had you ever heard of this one? Tell me in the comments.", "cap": ""}]}
+   "segments": [
+    {
+     "vo": "The great molasses flood.",
+     "cap": ""
+    },
+    {
+     "vo": "Had you ever heard of this one? Tell me in the comments.",
+     "cap": ""
+    }
+   ]
+  }
  ]
 }

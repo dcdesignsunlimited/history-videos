@@ -19,11 +19,15 @@ TikTok (@historicalleaders), Instagram (@semper_lit) and YouTube Shorts via Metr
 - Quotes on screen must be real and verified. Never invent quotes, headlines or documents' wording
   presented as real — card/quote text must be either verified wording or clearly a summary label.
 
-### 3b. Archival photos (when the network allows)
-- Look for public-domain or CC0 photos of the actual event, place or object (Wikimedia Commons, Library of Congress).
-  Check the file page's license; skip anything else. No portraits of named people — scenes, places, objects, crowds.
-- Save to `assets/<slug>/` (downscale to ~1600 px wide, JPEG), look at each image to confirm it shows what you say,
-  and put the source in the scene's `credit`. If photos can't be fetched, build the video from the other graphics.
+### 3b. Archival photos (1–3 per video when available)
+- Find public-domain / CC0 photos of the actual event, place or object on Wikimedia Commons:
+      python3 pipeline/fetch_photo.py search "<event> <year>"
+      python3 pipeline/fetch_photo.py get "File:<exact title>" <slug>
+  `get` refuses anything that isn't public domain / CC0, saves `assets/<slug>/<n>.jpg` (+ credits.json) and prints a credit line.
+- Wikimedia rate-limits cloud IPs: the script waits and retries; leave ~5 s between downloads. If it still fails
+  after a couple of tries, skip photos for today and build the video from the other graphics — never block the post on photos.
+- No portraits of named people — scenes, places, objects, crowds. Read each saved image to confirm it shows what the
+  narration says, use it in a `photo` scene with the printed `credit`, and commit `assets/<slug>/` with the spec.
 
 ## 4. Write the spec
 - Follow `pipeline/SPEC_FORMAT.md`. Save as `stories/YYYY-MM-DD-slug.json`.
