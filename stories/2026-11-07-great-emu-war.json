@@ -1,0 +1,362 @@
+{
+ "slug": "great-emu-war",
+ "title": "The Great Emu War (1932)",
+ "scenes": [
+  {
+   "type": "hook",
+   "tag": "TRUE STORY · AUSTRALIA, 1932",
+   "lines": [
+    {
+     "t": "AN ARMY"
+    },
+    {
+     "t": "FOUGHT"
+    },
+    {
+     "t": "EMUS."
+    },
+    {
+     "t": "AND LOST.",
+     "c": "a"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "In nineteen thirty-two, an army went to war with emus. And lost.",
+     "cap": ""
+    },
+    {
+     "vo": "This really happened.",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "type": "map",
+   "header": "WESTERN AUSTRALIA",
+   "bbox": [
+    112.5,
+    -35.5,
+    124.5,
+    -27.5
+   ],
+   "countries": [
+    {
+     "name": "Australia",
+     "color": "a",
+     "at": 0.05
+    }
+   ],
+   "pins": [
+    {
+     "lon": 115.86,
+     "lat": -31.95,
+     "label": "PERTH",
+     "color": "w",
+     "at": 0.2
+    },
+    {
+     "lon": 118.4,
+     "lat": -31.0,
+     "label": "CAMPION",
+     "color": "r",
+     "at": 0.5
+    }
+   ],
+   "big": {
+    "text": "THE WHEATBELT",
+    "at": 0.6,
+    "color": "a"
+   },
+   "segments": [
+    {
+     "vo": "It happened in Western Australia's wheat country, near Camp-ee-un.",
+     "cap": "It happened in Western Australia's wheat country, near Campion."
+    }
+   ]
+  },
+  {
+   "type": "split",
+   "header": "THE FARMERS",
+   "left": {
+    "title": "1914–1918",
+    "icon": "military-rank",
+    "text": "SOLDIERS",
+    "color": "w"
+   },
+   "right": {
+    "title": "1932",
+    "icon": "wheat",
+    "text": "FARMERS",
+    "color": "a"
+   },
+   "mid": "→",
+   "right_at": 0.5,
+   "segments": [
+    {
+     "vo": "Many farmers there were World War One veterans.",
+     "cap": "Many farmers there were World War One veterans."
+    },
+    {
+     "vo": "The Depression had hit them hard.",
+     "cap": "The Depression had hit them hard."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "THE INVADERS",
+   "value": 20000,
+   "suffix": "",
+   "sub": "EMUS · ROUGHLY",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "Then about twenty thousand emus moved onto their land.",
+     "cap": "Then about 20,000 emus moved onto their land."
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/emu-war/3.jpg",
+   "pan": "down",
+   "grade": "sepia",
+   "credit": "Photo: Pickering Brook Heritage (Public domain)",
+   "segments": [
+    {
+     "vo": "The giant birds raided the wheat crops the farmers depended on.",
+     "cap": "The giant birds raided the wheat crops the farmers depended on."
+    }
+   ],
+   "focus": [
+    0.5,
+    0.75
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "military-award",
+   "text": "SEND THE ARMY",
+   "sub": "THE GOVERNMENT SAID YES",
+   "color": "r",
+   "segments": [
+    {
+     "vo": "The farmers asked for help. The government sent soldiers.",
+     "cap": "The farmers asked for help. The government sent soldiers."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "COMMANDING OFFICER",
+   "photo": true,
+   "lines": [
+    "MAJOR G.P.W. MEREDITH",
+    "ROYAL AUSTRALIAN",
+    "ARTILLERY",
+    "TARGET: EMUS"
+   ],
+   "stamp": {
+    "text": "DEPLOYED",
+    "at": 0.6,
+    "color": "red"
+   },
+   "segments": [
+    {
+     "vo": "Major Meredith of the Royal Australian Artillery took command.",
+     "cap": "Major G.P.W. Meredith of the Royal Australian Artillery took command."
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/emu-war/1.jpg",
+   "pan": "in",
+   "grade": "bw",
+   "header": "LEWIS GUN, EMU WAR, 1932",
+   "credit": "Photo: Wazee Digital (Public domain)",
+   "segments": [
+    {
+     "vo": "His men brought two Lewis machine guns and ten thousand rounds.",
+     "cap": "His men brought two Lewis machine guns and 10,000 rounds."
+    }
+   ]
+  },
+  {
+   "type": "date",
+   "big": "NOVEMBER 2, 1932",
+   "sub": "CAMPION · WESTERN AUSTRALIA",
+   "atmosphere": "dust",
+   "segments": [
+    {
+     "vo": "On November second, nineteen thirty-two, the operation began.",
+     "cap": "On November 2, 1932, the operation began."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "target",
+   "text": "AMBUSH",
+   "sub": "A FLOCK OF ABOUT 1,000 BIRDS",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "Days later, they ambushed about a thousand emus near a dam.",
+     "cap": "Days later, they ambushed about 1,000 emus near a dam."
+    }
+   ]
+  },
+  {
+   "type": "units",
+   "header": "BIRDS DOWN",
+   "count": 12,
+   "icon": "feather",
+   "per_row": 6,
+   "color": "a",
+   "stamp": {
+    "text": "JAMMED",
+    "at": 0.7,
+    "color": "red"
+   },
+   "shake": {
+    "at": 0.7,
+    "dur": 0.5,
+    "amp": 25
+   },
+   "segments": [
+    {
+     "vo": "After just twelve birds were killed, the gun jammed.",
+     "cap": "After just 12 birds were killed, the gun jammed."
+    }
+   ]
+  },
+  {
+   "type": "timeline",
+   "header": "THE CAMPAIGN",
+   "events": [
+    {
+     "date": "NOV 2",
+     "label": "Operation begins"
+    },
+    {
+     "date": "NOV 8",
+     "label": "Soldiers pulled out"
+    },
+    {
+     "date": "MID-NOV",
+     "label": "Sent back in"
+    },
+    {
+     "date": "DEC 10",
+     "label": "Recalled for good"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "After six days, the soldiers were pulled out.",
+     "cap": "After 6 days, the soldiers were pulled out."
+    },
+    {
+     "vo": "Then they were sent back in, until December.",
+     "cap": "Then they were sent back in, until December."
+    }
+   ]
+  },
+  {
+   "type": "compare",
+   "header": "MEREDITH'S CLAIMED TALLY",
+   "unit": "",
+   "items": [
+    {
+     "label": "ROUNDS FIRED",
+     "value": 9860,
+     "icon": "crosshair",
+     "text": "9,860",
+     "color": "r"
+    },
+    {
+     "label": "EMUS KILLED",
+     "value": 986,
+     "icon": "feather",
+     "text": "986",
+     "color": "a"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "Meredith claimed nine hundred eighty-six kills, with nine thousand, eight hundred sixty rounds.",
+     "cap": "Meredith claimed 986 kills, with 9,860 rounds."
+    }
+   ]
+  },
+  {
+   "type": "quote",
+   "style": "letter",
+   "header": "MAJOR MEREDITH ON THE EMUS",
+   "meta": [
+    "G.P.W. MEREDITH",
+    "AFTER THE CAMPAIGN"
+   ],
+   "quote": "They can face machine guns with the invulnerability of tanks.",
+   "attribution": "— Major G.P.W. Meredith",
+   "segments": [
+    {
+     "vo": "Meredith later said the emus could face machine guns with the invulnerability of tanks.",
+     "cap": "Meredith later said the emus could face machine guns \"with the invulnerability of tanks.\""
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "hand-stop",
+   "text": "REQUEST DENIED",
+   "sub": "1934",
+   "color": "r",
+   "segments": [
+    {
+     "vo": "When farmers asked for the army again in nineteen thirty-four, they were refused.",
+     "cap": "When farmers asked for the army again in 1934, they were refused."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "BOUNTIES CLAIMED IN 6 MONTHS",
+   "value": 57000,
+   "prefix": "~",
+   "sub": "1934",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "Instead, hunters got bounties. About fifty-seven thousand were claimed in six months.",
+     "cap": "Instead, hunters got bounties. About 57,000 were claimed in 6 months."
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "lines": [
+    {
+     "t": "THE GREAT"
+    },
+    {
+     "t": "EMU WAR",
+     "c": "a"
+    }
+   ],
+   "question": "Who really won this war?",
+   "segments": [
+    {
+     "vo": "The Great Emu War.",
+     "cap": ""
+    },
+    {
+     "vo": "So who really won? Tell me in the comments.",
+     "cap": ""
+    }
+   ]
+  }
+ ]
+}
