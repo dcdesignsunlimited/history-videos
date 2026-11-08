@@ -1,0 +1,377 @@
+{
+ "slug": "vasa-warship",
+ "title": "The Warship That Sank in Minutes (1628)",
+ "scenes": [
+  {
+   "type": "hook",
+   "tag": "TRUE STORY · SWEDEN, 1628",
+   "lines": [
+    {
+     "t": "A MIGHTY"
+    },
+    {
+     "t": "WARSHIP"
+    },
+    {
+     "t": "SANK IN"
+    },
+    {
+     "t": "MINUTES.",
+     "c": "a"
+    }
+   ],
+   "atmosphere": "rain",
+   "segments": [
+    {
+     "vo": "Sweden's mightiest warship sank minutes into her first voyage.",
+     "cap": ""
+    },
+    {
+     "vo": "This really happened.",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "type": "date",
+   "big": "AUGUST 10, 1628",
+   "sub": "STOCKHOLM · SWEDEN",
+   "atmosphere": "night_sea",
+   "segments": [
+    {
+     "vo": "Stockholm, August tenth, sixteen twenty-eight.",
+     "cap": "Stockholm, August 10, 1628."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "crown",
+   "text": "THE VASA",
+   "sub": "BUILT FOR KING GUSTAV II ADOLF",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "The ship was called the Vasa, and she was built for King Gustav the Second Adolf of Sweden.",
+     "cap": "The ship was called the Vasa, and she was built for King Gustav II Adolf of Sweden."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "FIREPOWER",
+   "value": 64,
+   "suffix": "",
+   "sub": "GUNS · TWO GUN DECKS",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "She carried sixty-four guns on two gun decks.",
+     "cap": "She carried 64 guns on two gun decks."
+    }
+   ]
+  },
+  {
+   "type": "units",
+   "header": "THE STABILITY TEST",
+   "count": 30,
+   "icon": "run",
+   "per_row": 6,
+   "color": "w",
+   "suffix": " MEN",
+   "sub": "RUNNING ACROSS THE DECK",
+   "segments": [
+    {
+     "vo": "Before she sailed, thirty men ran back and forth across her deck.",
+     "cap": "Before she sailed, 30 men ran back and forth across her deck."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "alert-triangle",
+   "text": "TEST STOPPED",
+   "sub": "AFTER JUST 3 RUNS",
+   "color": "r",
+   "shake": {
+    "at": 0.2,
+    "dur": 0.5,
+    "amp": 22
+   },
+   "segments": [
+    {
+     "vo": "After just three runs, she rolled so badly the test was stopped.",
+     "cap": "After just 3 runs, she rolled so badly the test was stopped."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "WARSHIP VASA · 1628",
+   "lines": [
+    "GUNS: 64",
+    "STABILITY TEST: FAILED",
+    "ORDERS:"
+   ],
+   "added": {
+    "lines": [
+     "SAIL ANYWAY"
+    ],
+    "at": 0.45
+   },
+   "stamp": {
+    "text": "APPROVED",
+    "at": 0.75,
+    "color": "red"
+   },
+   "segments": [
+    {
+     "vo": "Under pressure, she was sent to sea anyway.",
+     "cap": "Under pressure, she was sent to sea anyway."
+    }
+   ]
+  },
+  {
+   "type": "map",
+   "header": "SWEDEN",
+   "bbox": [
+    11.0,
+    55.0,
+    24.0,
+    63.5
+   ],
+   "countries": [
+    {
+     "name": "Sweden",
+     "color": "a",
+     "at": 0.05
+    }
+   ],
+   "pins": [
+    {
+     "lon": 18.07,
+     "lat": 59.33,
+     "label": "STOCKHOLM",
+     "color": "r",
+     "at": 0.25
+    }
+   ],
+   "big": {
+    "text": "ONLY 1,300 METRES",
+    "at": 0.5,
+    "color": "a"
+   },
+   "segments": [
+    {
+     "vo": "She left the dock in Stockholm and managed only thirteen hundred metres.",
+     "cap": "She left the dock in Stockholm and managed only 1,300 metres."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "ship-off",
+   "text": "SHE LEANED",
+   "sub": "AND WATER RUSHED IN",
+   "color": "r",
+   "trans": "glitch",
+   "shake": {
+    "at": 0.35,
+    "dur": 0.7,
+    "amp": 32
+   },
+   "segments": [
+    {
+     "vo": "Then she leaned over, water rushed in, and she went down.",
+     "cap": "Then she leaned over, water rushed in, and she went down."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "STRAIGHT TO THE BOTTOM",
+   "value": 32,
+   "suffix": " M",
+   "sub": "DEEP · IN THE HARBOUR",
+   "color": "w",
+   "segments": [
+    {
+     "vo": "She settled thirty-two metres down, right in the harbour.",
+     "cap": "She settled 32 metres down, right in the harbour."
+    }
+   ]
+  },
+  {
+   "type": "units",
+   "header": "THE COST",
+   "count": 30,
+   "icon": "man",
+   "per_row": 6,
+   "color": "r",
+   "suffix": " DEAD",
+   "sub": "ABOUT 30 PEOPLE",
+   "segments": [
+    {
+     "vo": "About thirty people died.",
+     "cap": "About 30 people died."
+    }
+   ]
+  },
+  {
+   "type": "split",
+   "header": "THE INQUIRY",
+   "left": {
+    "title": "THE CAPTAIN",
+    "icon": "lock",
+    "text": "ARRESTED",
+    "color": "w"
+   },
+   "right": {
+    "title": "THE VERDICT",
+    "icon": "gavel",
+    "text": "NO ONE PUNISHED",
+    "color": "a"
+   },
+   "mid": "→",
+   "right_at": 0.45,
+   "segments": [
+    {
+     "vo": "The captain was arrested.",
+     "cap": "The captain was arrested."
+    },
+    {
+     "vo": "But in the end, nobody was ever punished.",
+     "cap": "But in the end, nobody was ever punished."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "hourglass",
+   "text": "BUT...",
+   "sub": "THE STRANGEST PART CAME LATER",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "But the strangest part came centuries later.",
+     "cap": "But the strangest part came centuries later."
+    }
+   ]
+  },
+  {
+   "type": "timeline",
+   "header": "333 YEARS UNDERWATER",
+   "events": [
+    {
+     "date": "1628",
+     "label": "SINKS"
+    },
+    {
+     "date": "1956",
+     "label": "WRECK FOUND"
+    },
+    {
+     "date": "1961",
+     "label": "RAISED"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "Then, in nineteen fifty-six, an explorer named Anders Fran-zen found the wreck.",
+     "cap": "Then, in 1956, an explorer named Anders Franzén found the wreck."
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/vasa-warship/1.jpg",
+   "pan": "out",
+   "grade": "none",
+   "focus": [
+    0.45,
+    0.45
+   ],
+   "header": "APRIL 1961",
+   "credit": "Photo: Vasamuseet (Public domain)",
+   "segments": [
+    {
+     "vo": "In April nineteen sixty-one, after three hundred and thirty-three years, she broke the surface.",
+     "cap": "In April 1961, after 333 years, she broke the surface."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "STILL ORIGINAL",
+   "value": 98,
+   "suffix": "%",
+   "sub": "OF THE SHIP",
+   "color": "a",
+   "stamp": {
+    "text": "INTACT",
+    "at": 0.7,
+    "color": "red"
+   },
+   "segments": [
+    {
+     "vo": "And she was still ninety-eight percent original.",
+     "cap": "And she was still 98% original."
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/vasa-warship/2.jpg",
+   "pan": "left",
+   "grade": "bw",
+   "focus": [
+    0.5,
+    0.6
+   ],
+   "header": "VASA · 1961",
+   "credit": "Photo: Press photo (Public domain)",
+   "icons": [
+    {
+     "name": "bug-off",
+     "x": 0.82,
+     "y": 0.18,
+     "size": 150,
+     "color": "a",
+     "at": 0.35
+    }
+   ],
+   "segments": [
+    {
+     "vo": "The cold, brackish Baltic had kept the wood-eating shipworms away, so her timbers survived.",
+     "cap": "The cold, brackish Baltic had kept the wood-eating shipworms away, so her timbers survived."
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "lines": [
+    {
+     "t": "THE SHIP"
+    },
+    {
+     "t": "THAT SANK"
+    },
+    {
+     "t": "IN MINUTES.",
+     "c": "a"
+    }
+   ],
+   "question": "Would you have sailed on her?",
+   "segments": [
+    {
+     "vo": "The warship that sank in minutes.",
+     "cap": ""
+    },
+    {
+     "vo": "Would you have sailed on her? Tell me in the comments.",
+     "cap": ""
+    }
+   ]
+  }
+ ]
+}
