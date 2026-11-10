@@ -1,0 +1,359 @@
+{
+ "slug": "petrov-false-alarm",
+ "title": "The Man Who Stopped a Nuclear War (1983)",
+ "scenes": [
+  {
+   "type": "hook",
+   "tag": "TRUE STORY · USSR, 1983",
+   "lines": [
+    {
+     "t": "ONE MAN"
+    },
+    {
+     "t": "STOPPED"
+    },
+    {
+     "t": "A NUCLEAR"
+    },
+    {
+     "t": "WAR.",
+     "c": "a"
+    }
+   ],
+   "atmosphere": "embers",
+   "segments": [
+    {
+     "vo": "In nineteen eighty-three, one man stopped a nuclear war.",
+     "cap": ""
+    },
+    {
+     "vo": "This really happened.",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "type": "date",
+   "big": "SEPTEMBER 26, 1983",
+   "sub": "JUST AFTER MIDNIGHT · NEAR MOSCOW",
+   "atmosphere": "snow",
+   "segments": [
+    {
+     "vo": "September twenty-sixth, nineteen eighty-three. Just after midnight, in a secret bunker near Moscow.",
+     "cap": "September 26, 1983. Just after midnight, in a secret bunker near Moscow."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "OFFICER ON DUTY",
+   "photo": true,
+   "lines": [
+    "LT. COL. S. PETROV",
+    "SOVIET AIR DEFENSE",
+    "SERPUKHOV-15 BUNKER",
+    "EARLY-WARNING WATCH"
+   ],
+   "segments": [
+    {
+     "vo": "The officer on duty was Lieutenant Colonel Stanislav Petrov, watching the Soviet early-warning satellites.",
+     "cap": "The officer on duty was Lt. Col. Stanislav Petrov, watching the Soviet early-warning satellites."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "SEPT 1, 1983 · KOREAN AIR 007",
+   "value": 269,
+   "suffix": " KILLED",
+   "sub": "AIRLINER SHOT DOWN BY THE USSR",
+   "color": "r",
+   "segments": [
+    {
+     "vo": "Weeks earlier, the Soviets had shot down a Korean airliner, killing all two hundred sixty-nine people aboard.",
+     "cap": "Weeks earlier, the Soviets had shot down a Korean airliner, killing all 269 people aboard."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "alert-triangle",
+   "text": "LAUNCH!",
+   "sub": "THE BUNKER ALARMS GO OFF",
+   "color": "r",
+   "shake": {
+    "at": 0.1,
+    "dur": 0.6,
+    "amp": 30
+   },
+   "segments": [
+    {
+     "vo": "Then the alarms went off.",
+     "cap": "Then the alarms went off."
+    }
+   ]
+  },
+  {
+   "type": "map",
+   "header": "MISSILE LAUNCH DETECTED",
+   "bbox": [
+    -130,
+    15,
+    70,
+    72
+   ],
+   "countries": [
+    {
+     "name": "United States of America",
+     "color": "r",
+     "at": 0.1
+    },
+    {
+     "name": "Russia",
+     "color": "a",
+     "at": 0.2
+    }
+   ],
+   "arrows": [
+    {
+     "from": [
+      -100,
+      42
+     ],
+     "to": [
+      37.6,
+      55.7
+     ],
+     "color": "r",
+     "at": 0.3,
+     "dur": 0.5,
+     "curve": 0.35,
+     "label": "ICBM"
+    }
+   ],
+   "pins": [
+    {
+     "lon": 37.6,
+     "lat": 55.7,
+     "label": "MOSCOW",
+     "color": "a",
+     "at": 0.25
+    }
+   ],
+   "segments": [
+    {
+     "vo": "A satellite had spotted an American intercontinental missile, heading for the Soviet Union.",
+     "cap": "A satellite had spotted an American intercontinental missile, heading for the Soviet Union."
+    }
+   ]
+  },
+  {
+   "type": "units",
+   "header": "THEN FOUR MORE",
+   "count": 5,
+   "icon": "rocket",
+   "per_row": 5,
+   "color": "r",
+   "suffix": " MISSILES",
+   "sub": "ACCORDING TO THE SATELLITES",
+   "segments": [
+    {
+     "vo": "Then four more appeared. Five missiles, inbound.",
+     "cap": "Then 4 more appeared. 5 missiles, inbound."
+    }
+   ]
+  },
+  {
+   "type": "split",
+   "header": "TWO SIGNALS",
+   "left": {
+    "title": "SATELLITES",
+    "icon": "satellite",
+    "text": "ATTACK",
+    "color": "r"
+   },
+   "right": {
+    "title": "GROUND RADAR",
+    "icon": "radar",
+    "text": "NOTHING",
+    "color": "a"
+   },
+   "mid": "VS",
+   "right_at": 0.45,
+   "segments": [
+    {
+     "vo": "The satellites said attack.",
+     "cap": "The satellites said attack."
+    },
+    {
+     "vo": "But ground radar showed nothing at all.",
+     "cap": "But ground radar showed nothing at all."
+    }
+   ]
+  },
+  {
+   "type": "quote",
+   "style": "newspaper",
+   "header": "IN HIS OWN WORDS",
+   "meta": [
+    "STANISLAV PETROV",
+    "WASHINGTON POST, 1999"
+   ],
+   "quote": "I had a funny feeling in my gut.",
+   "attribution": "— Stanislav Petrov",
+   "segments": [
+    {
+     "vo": "Petrov later said he had a funny feeling in his gut.",
+     "cap": "Petrov later said he had a funny feeling in his gut."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "brain",
+   "text": "ONLY 5?",
+   "sub": "A REAL FIRST STRIKE WOULD BE MASSIVE",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "Why would America start a nuclear war with only five missiles?",
+     "cap": "Why would America start a nuclear war with only 5 missiles?"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "PETROV'S CALL",
+   "lines": [
+    "SATELLITE REPORT:",
+    "5 INCOMING ICBMs",
+    "GROUND RADAR:",
+    "NO CONFIRMATION"
+   ],
+   "stamp": {
+    "text": "FALSE ALARM",
+    "at": 0.5,
+    "color": "red"
+   },
+   "segments": [
+    {
+     "vo": "He decided it was a false alarm, and no counterattack was launched.",
+     "cap": "He decided it was a false alarm, and no counterattack was launched."
+    }
+   ],
+   "photo": false
+  },
+  {
+   "type": "icon",
+   "icon": "hourglass",
+   "text": "BUT WHY?",
+   "sub": "WHAT DID THE SATELLITES SEE?",
+   "color": "w",
+   "segments": [
+    {
+     "vo": "So what had the satellites really seen? That's the strangest part.",
+     "cap": "So what had the satellites really seen? That's the strangest part."
+    }
+   ]
+  },
+  {
+   "type": "split",
+   "header": "THE CAUSE",
+   "left": {
+    "title": "WHAT IT SAW",
+    "icon": "rocket",
+    "text": "MISSILES",
+    "color": "r"
+   },
+   "right": {
+    "title": "WHAT IT WAS",
+    "icon": "sun",
+    "text": "SUNLIGHT",
+    "color": "a"
+   },
+   "mid": "→",
+   "right_at": 0.4,
+   "segments": [
+    {
+     "vo": "The missiles were never real.",
+     "cap": "The missiles were never real."
+    },
+    {
+     "vo": "It was sunlight, reflecting off high-altitude clouds.",
+     "cap": "It was sunlight, reflecting off high-altitude clouds."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "medal",
+   "text": "NO REWARD",
+   "sub": "FOR SAVING THE WORLD",
+   "color": "r",
+   "segments": [
+    {
+     "vo": "And his reward for saving the world? Nothing.",
+     "cap": "And his reward for saving the world? Nothing."
+    }
+   ]
+  },
+  {
+   "type": "timeline",
+   "header": "AFTERMATH",
+   "events": [
+    {
+     "date": "1983",
+     "label": "FALSE ALARM"
+    },
+    {
+     "date": "1991",
+     "label": "USSR COLLAPSES"
+    },
+    {
+     "date": "MAY 2017",
+     "label": "PETROV DIES, 77"
+    },
+    {
+     "date": "SEPT 2017",
+     "label": "WORLD FINDS OUT"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "It stayed secret until after the Soviet Union fell.",
+     "cap": "It stayed secret until after the Soviet Union fell."
+    },
+    {
+     "vo": "When he died in twenty seventeen, the world didn't notice for months.",
+     "cap": "When he died in 2017, the world didn't notice for months."
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "lines": [
+    {
+     "t": "THE MAN"
+    },
+    {
+     "t": "WHO SAVED"
+    },
+    {
+     "t": "THE WORLD",
+     "c": "a"
+    }
+   ],
+   "question": "Would you have trusted your gut?",
+   "segments": [
+    {
+     "vo": "The man who saved the world.",
+     "cap": ""
+    },
+    {
+     "vo": "Would you have trusted your gut? Tell me in the comments.",
+     "cap": ""
+    }
+   ]
+  }
+ ]
+}
