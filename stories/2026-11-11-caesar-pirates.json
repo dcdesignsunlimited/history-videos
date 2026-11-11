@@ -1,0 +1,425 @@
+{
+ "slug": "caesar-pirates",
+ "title": "Caesar and the Pirates (75 BC)",
+ "scenes": [
+  {
+   "type": "hook",
+   "tag": "TRUE STORY · AEGEAN SEA, ~75 BC",
+   "atmosphere": "dust",
+   "lines": [
+    {
+     "t": "KIDNAPPED"
+    },
+    {
+     "t": "CAESAR"
+    },
+    {
+     "t": "UPPED HIS"
+    },
+    {
+     "t": "RANSOM.",
+     "c": "a"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "Pirates kidnapped Julius Caesar, and he demanded a bigger ransom.",
+     "cap": ""
+    },
+    {
+     "vo": "This really happened.",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "type": "date",
+   "big": "AROUND 75 BC",
+   "sub": "THE AEGEAN SEA",
+   "atmosphere": "night_sea",
+   "segments": [
+    {
+     "vo": "Around seventy-five B C, a ship is crossing the Aegean Sea.",
+     "cap": "Around 75 BC, a ship is crossing the Aegean Sea."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "THE PASSENGER",
+   "photo": true,
+   "lines": [
+    "GAIUS JULIUS CAESAR",
+    "AGE: 25",
+    "ROMAN NOBLEMAN",
+    "BOUND FOR RHODES"
+   ],
+   "segments": [
+    {
+     "vo": "On board is twenty-five-year-old Julius Caesar, sailing to Rhodes to study public speaking.",
+     "cap": "On board is 25-year-old Julius Caesar, sailing to Rhodes to study public speaking."
+    }
+   ]
+  },
+  {
+   "type": "map",
+   "header": "SEIZED AT SEA",
+   "bbox": [
+    10,
+    33,
+    33,
+    44
+   ],
+   "countries": [
+    {
+     "name": "Greece",
+     "color": "w",
+     "at": 0.05
+    },
+    {
+     "name": "Turkey",
+     "color": "w",
+     "at": 0.05
+    }
+   ],
+   "pins": [
+    {
+     "lon": 12.5,
+     "lat": 41.9,
+     "label": "ROME",
+     "color": "w",
+     "at": 0.1
+    },
+    {
+     "lon": 28.2,
+     "lat": 36.4,
+     "label": "RHODES",
+     "color": "a",
+     "at": 0.2
+    }
+   ],
+   "arrows": [
+    {
+     "from": [
+      12.5,
+      41.9
+     ],
+     "to": [
+      25.5,
+      37.5
+     ],
+     "color": "a",
+     "at": 0.25,
+     "dur": 0.4,
+     "curve": 0.25
+    }
+   ],
+   "big": {
+    "text": "PIRATES!",
+    "at": 0.6,
+    "color": "r"
+   },
+   "shake": {
+    "at": 0.6,
+    "dur": 0.5,
+    "amp": 25
+   },
+   "segments": [
+    {
+     "vo": "But in the Aegean, pirates seize the ship.",
+     "cap": "But in the Aegean, pirates seize the ship."
+    }
+   ]
+  },
+  {
+   "type": "compare",
+   "header": "THE RANSOM",
+   "unit": "TALENTS OF SILVER",
+   "items": [
+    {
+     "label": "PIRATES ASK",
+     "value": 20,
+     "icon": "skull",
+     "text": "20",
+     "color": "w"
+    },
+    {
+     "label": "CAESAR SAYS",
+     "value": 50,
+     "icon": "crown",
+     "text": "50",
+     "color": "a"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "They demand a ransom of twenty talents.",
+     "cap": "They demand a ransom of 20 talents."
+    },
+    {
+     "vo": "Caesar laughs, and tells them to ask for fifty.",
+     "cap": "Caesar laughs, and tells them to ask for 50."
+    }
+   ]
+  },
+  {
+   "type": "split",
+   "header": "WHO STAYS",
+   "mid": "→",
+   "right_at": 0.45,
+   "left": {
+    "title": "SENT AWAY",
+    "icon": "users",
+    "text": "RAISE MONEY",
+    "color": "w"
+   },
+   "right": {
+    "title": "STAYS BEHIND",
+    "icon": "user",
+    "text": "3 COMPANIONS",
+    "color": "a"
+   },
+   "segments": [
+    {
+     "vo": "He sends his men off to raise the money.",
+     "cap": "He sends his men off to raise the money."
+    },
+    {
+     "vo": "He stays behind with one friend and two servants.",
+     "cap": "He stays behind with 1 friend and 2 servants."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "HELD CAPTIVE",
+   "value": 38,
+   "suffix": " DAYS",
+   "sub": "AMONG THE PIRATES",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "He is held for thirty-eight days.",
+     "cap": "He is held for 38 days."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "zzz",
+   "text": "QUIET!",
+   "sub": "CAESAR WANTS TO SLEEP",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "When he wants to sleep, he orders the pirates to be quiet.",
+     "cap": "When he wants to sleep, he orders the pirates to be quiet."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "LIFE AS A HOSTAGE",
+   "lines": [
+    "JOINS THEIR GAMES",
+    "WRITES POEMS",
+    "WRITES SPEECHES",
+    "PIRATES MUST LISTEN"
+   ],
+   "segments": [
+    {
+     "vo": "He joins their games, writes poems and speeches, and makes the pirates listen.",
+     "cap": "He joins their games, writes poems and speeches, and makes the pirates listen."
+    }
+   ],
+   "photo": false
+  },
+  {
+   "type": "icon",
+   "icon": "skull",
+   "text": "THREATS",
+   "sub": "TO EXECUTE THEM ALL",
+   "color": "r",
+   "segments": [
+    {
+     "vo": "And he keeps threatening to execute every last one of them.",
+     "cap": "And he keeps threatening to execute every last one of them."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "mood-happy",
+   "text": "A JOKE?",
+   "sub": "THE PIRATES JUST LAUGH",
+   "color": "w",
+   "segments": [
+    {
+     "vo": "The pirates think he's joking.",
+     "cap": "The pirates think he's joking."
+    }
+   ]
+  },
+  {
+   "type": "map",
+   "header": "THE RANSOM ARRIVES",
+   "bbox": [
+    16,
+    34,
+    32,
+    42
+   ],
+   "countries": [
+    {
+     "name": "Turkey",
+     "color": "w",
+     "at": 0.05
+    }
+   ],
+   "pins": [
+    {
+     "lon": 27.28,
+     "lat": 37.53,
+     "label": "MILETUS",
+     "color": "a",
+     "at": 0.15
+    }
+   ],
+   "big": {
+    "text": "FREE",
+    "at": 0.55,
+    "color": "a"
+   },
+   "segments": [
+    {
+     "vo": "Finally, the ransom arrives from Myleetus, and Caesar walks free.",
+     "cap": "Finally, the ransom arrives from Miletus, and Caesar walks free."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "hourglass",
+   "text": "BUT...",
+   "sub": "HE WASN'T FINISHED",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "But he isn't finished with the pirates.",
+     "cap": "But he isn't finished with the pirates."
+    }
+   ]
+  },
+  {
+   "type": "split",
+   "header": "THE TABLES TURN",
+   "mid": "→",
+   "right_at": 0.42,
+   "left": {
+    "title": "THE HOSTAGE",
+    "icon": "lock",
+    "text": "CAPTIVE",
+    "color": "w"
+   },
+   "right": {
+    "title": "THE HUNTER",
+    "icon": "sailboat",
+    "text": "FLEET",
+    "color": "r"
+   },
+   "segments": [
+    {
+     "vo": "He gathers ships in Myleetus.",
+     "cap": "He gathers ships in Miletus."
+    },
+    {
+     "vo": "Then he sails back, and captures almost all of them.",
+     "cap": "Then he sails back, and captures almost all of them."
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/caesar-pirates/1.jpg",
+   "pan": "right",
+   "focus": [
+    0.5,
+    0.4
+   ],
+   "grade": "sepia",
+   "header": "PERGAMUM",
+   "credit": "Photo: R.Bohn (Public domain)",
+   "segments": [
+    {
+     "vo": "He locks them in prison at Pergamum.",
+     "cap": "He locks them in prison at Pergamum."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "ROMAN GOVERNOR OF ASIA",
+   "lines": [
+    "CASE: THE PIRATES",
+    "HAS HIS EYE ON:",
+    "THEIR TREASURE"
+   ],
+   "stamp": {
+    "text": "DELAYED",
+    "at": 0.55,
+    "color": "red"
+   },
+   "segments": [
+    {
+     "vo": "But the Roman governor stalls, with his eye on the pirates' treasure.",
+     "cap": "But the Roman governor stalls, with his eye on the pirates' treasure."
+    }
+   ],
+   "photo": false
+  },
+  {
+   "type": "icon",
+   "icon": "gavel",
+   "text": "PROMISE KEPT",
+   "sub": "EVERY PIRATE EXECUTED",
+   "color": "r",
+   "shake": {
+    "at": 0.3,
+    "dur": 0.6,
+    "amp": 30
+   },
+   "segments": [
+    {
+     "vo": "So Caesar goes to the prison himself, and has them all crucified, just as he promised.",
+     "cap": "So Caesar goes to the prison himself, and has them all crucified, just as he promised."
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "lines": [
+    {
+     "t": "CAESAR"
+    },
+    {
+     "t": "VS THE"
+    },
+    {
+     "t": "PIRATES",
+     "c": "a"
+    }
+   ],
+   "question": "Would you have taken his threats seriously?",
+   "segments": [
+    {
+     "vo": "Caesar versus the pirates.",
+     "cap": ""
+    },
+    {
+     "vo": "Would you have taken his threats seriously? Tell me in the comments.",
+     "cap": ""
+    }
+   ]
+  }
+ ]
+}
