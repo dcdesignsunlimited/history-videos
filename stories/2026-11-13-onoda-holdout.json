@@ -1,0 +1,422 @@
+{
+ "slug": "onoda-holdout",
+ "title": "The Soldier Who Wouldn't Surrender (1974)",
+ "scenes": [
+  {
+   "type": "hook",
+   "tag": "TRUE STORY · PHILIPPINES, 1944–1974",
+   "atmosphere": "rain",
+   "lines": [
+    {
+     "t": "HIS WAR"
+    },
+    {
+     "t": "DIDN'T END"
+    },
+    {
+     "t": "UNTIL"
+    },
+    {
+     "t": "1974.",
+     "c": "a"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "This soldier kept fighting World War Two until nineteen seventy-four.",
+     "cap": ""
+    },
+    {
+     "vo": "This really happened.",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "type": "date",
+   "big": "DECEMBER 1944",
+   "sub": "LUBANG ISLAND · THE PHILIPPINES",
+   "atmosphere": "night_sea",
+   "segments": [
+    {
+     "vo": "In December nineteen forty-four, Japan sends an officer to an island in the Philippines.",
+     "cap": "In December 1944, Japan sends an officer to an island in the Philippines."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "THE SOLDIER",
+   "photo": true,
+   "lines": [
+    "HIROO ONODA",
+    "SECOND LIEUTENANT",
+    "AGE: 22",
+    "POST: LUBANG ISLAND"
+   ],
+   "segments": [
+    {
+     "vo": "His name is Heero Onoda, a twenty-two-year-old second lieutenant.",
+     "cap": "His name is Hiroo Onoda, a 22-year-old second lieutenant."
+    }
+   ]
+  },
+  {
+   "type": "map",
+   "header": "LUBANG ISLAND",
+   "bbox": [
+    114.5,
+    5,
+    128,
+    20
+   ],
+   "countries": [
+    {
+     "name": "Philippines",
+     "color": "w",
+     "at": 0.05
+    }
+   ],
+   "pins": [
+    {
+     "lon": 120.98,
+     "lat": 14.6,
+     "label": "MANILA",
+     "color": "w",
+     "at": 0.15,
+     "label_offset": [
+      40,
+      -30
+     ]
+    },
+    {
+     "lon": 120.12,
+     "lat": 13.82,
+     "label": "LUBANG",
+     "color": "a",
+     "at": 0.35,
+     "label_offset": [
+      -170,
+      40
+     ]
+    }
+   ],
+   "arrows": [
+    {
+     "from": [
+      120.98,
+      14.6
+     ],
+     "to": [
+      120.2,
+      13.9
+     ],
+     "color": "a",
+     "at": 0.4,
+     "dur": 0.3,
+     "curve": 0.2
+    }
+   ],
+   "big": {
+    "text": "~150 KM SW OF MANILA",
+    "at": 0.55,
+    "color": "a"
+   },
+   "segments": [
+    {
+     "vo": "Lubang, about a hundred and fifty kilometers from Manila.",
+     "cap": "Lubang, about 150 km from Manila."
+    }
+   ]
+  },
+  {
+   "type": "split",
+   "header": "HIS ORDERS",
+   "left": {
+    "title": "ORDER 1",
+    "icon": "flag-off",
+    "text": "NEVER SURRENDER",
+    "color": "r"
+   },
+   "right": {
+    "title": "ORDER 2",
+    "icon": "shield",
+    "text": "STAY ALIVE",
+    "color": "a"
+   },
+   "right_at": 0.5,
+   "segments": [
+    {
+     "vo": "His orders: never surrender.",
+     "cap": "His orders: never surrender."
+    },
+    {
+     "vo": "Never take your own life.",
+     "cap": "Never take your own life."
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/onoda-holdout/2.jpg",
+   "pan": "in",
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "grade": "sepia",
+   "header": "SEPT 2, 1945 · TOKYO BAY",
+   "credit": "Photo: Army Signal Corps (Public domain)",
+   "segments": [
+    {
+     "vo": "In September nineteen forty-five, Japan surrenders.",
+     "cap": "In September 1945, Japan surrenders."
+    }
+   ]
+  },
+  {
+   "type": "quote",
+   "style": "letter",
+   "header": "LEAFLET · OCTOBER 1945",
+   "meta": [
+    "DROPPED OVER LUBANG",
+    "ENGLISH TRANSLATION"
+   ],
+   "quote": "The war ended on 15 August. Come down from the mountains!",
+   "attribution": "— leaflet found by Onoda's group",
+   "segments": [
+    {
+     "vo": "A leaflet arrives: the war ended on August fifteenth, come down from the mountains!",
+     "cap": "A leaflet arrives: \"The war ended on 15 August. Come down from the mountains!\""
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "spy",
+   "text": "FAKE",
+   "sub": "ENEMY PROPAGANDA, THEY DECIDE",
+   "color": "r",
+   "segments": [
+    {
+     "vo": "Onoda and his three men decide it's an enemy trick.",
+     "cap": "Onoda and his 3 men decide it's an enemy trick."
+    }
+   ],
+   "shake": {
+    "at": 0.3,
+    "dur": 0.5,
+    "amp": 25
+   }
+  },
+  {
+   "type": "timeline",
+   "header": "HIS MEN",
+   "events": [
+    {
+     "date": "1950",
+     "label": "ONE SURRENDERS"
+    },
+    {
+     "date": "1954",
+     "label": "ONE KILLED"
+    },
+    {
+     "date": "1972",
+     "label": "LAST ONE KILLED"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "One by one, his three men surrender or are shot dead.",
+     "cap": "One by one, his 3 men surrender or are shot dead."
+    },
+    {
+     "vo": "By nineteen seventy-two, Onoda is alone.",
+     "cap": "By 1972, Onoda is alone."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "hourglass",
+   "text": "BUT...",
+   "sub": "THE STRANGEST PART",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "But who found him is the strangest part.",
+     "cap": "But who found him is the strangest part."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "header": "THE SEARCHER",
+   "photo": true,
+   "lines": [
+    "NORIO SUZUKI",
+    "JAPANESE STUDENT",
+    "ADVENTURER",
+    "YEAR: 1974"
+   ],
+   "segments": [
+    {
+     "vo": "In nineteen seventy-four, a Japanese student named Norio Suzuki goes looking for him.",
+     "cap": "In 1974, a Japanese student named Norio Suzuki goes looking for him."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "binoculars",
+   "text": "HIS LIST",
+   "sub": "\"IN THAT ORDER\"",
+   "color": "a",
+   "icons": [
+    {
+     "name": "user-search",
+     "x": 0.2,
+     "y": 0.85,
+     "size": 130,
+     "color": "w",
+     "at": 0.3,
+     "label": "ONODA"
+    },
+    {
+     "name": "paw",
+     "x": 0.5,
+     "y": 0.85,
+     "size": 130,
+     "color": "w",
+     "at": 0.5,
+     "label": "PANDA"
+    },
+    {
+     "name": "snowman",
+     "x": 0.8,
+     "y": 0.85,
+     "size": 130,
+     "color": "a",
+     "at": 0.7,
+     "label": "YETI"
+    }
+   ],
+   "segments": [
+    {
+     "vo": "His list: Lieutenant Onoda, a panda, and the Abominable Snowman, in that order.",
+     "cap": "His list: Lieutenant Onoda, a panda, and the Abominable Snowman, in that order."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "ONODA FOUND IN",
+   "value": 4,
+   "suffix": " DAYS",
+   "sub": "FEBRUARY 20, 1974",
+   "color": "a",
+   "atmosphere": "rain",
+   "segments": [
+    {
+     "vo": "He finds Onoda in just four days.",
+     "cap": "He finds Onoda in just 4 days."
+    }
+   ]
+  },
+  {
+   "type": "date",
+   "big": "MARCH 9, 1974",
+   "sub": "HIS OLD COMMANDER RETURNS",
+   "stamp": {
+    "text": "MISSION OVER",
+    "at": 0.6,
+    "color": "red"
+   },
+   "segments": [
+    {
+     "vo": "On March ninth, his old commander, now a bookseller, relieves him of duty.",
+     "cap": "On March 9, his old commander, now a bookseller, relieves him of duty."
+    }
+   ]
+  },
+  {
+   "type": "photo",
+   "image": "assets/onoda-holdout/1.jpg",
+   "pan": "down",
+   "focus": [
+    0.5,
+    0.15
+   ],
+   "grade": "none",
+   "header": "TYPE 99 RIFLE (TOP)",
+   "credit": "Photo: Gary Todd (CC0)",
+   "circle": {
+    "x": 0.45,
+    "y": 0.15,
+    "r": 0.13,
+    "at": 0.3,
+    "label": "TYPE 99"
+   },
+   "segments": [
+    {
+     "vo": "Onoda hands over a working rifle and five hundred rounds.",
+     "cap": "Onoda hands over a working rifle and 500 rounds."
+    }
+   ]
+  },
+  {
+   "type": "counter",
+   "header": "TIME IN THE JUNGLE",
+   "value": 29,
+   "suffix": " YEARS",
+   "sub": "DECEMBER 1944 – MARCH 1974",
+   "color": "r",
+   "segments": [
+    {
+     "vo": "He had spent twenty-nine years in the jungle.",
+     "cap": "He had spent 29 years in the jungle."
+    }
+   ]
+  },
+  {
+   "type": "icon",
+   "icon": "plane-arrival",
+   "text": "PARDONED",
+   "sub": "THEN FLOWN HOME TO JAPAN",
+   "color": "a",
+   "segments": [
+    {
+     "vo": "He was pardoned, and flew home to Japan.",
+     "cap": "He was pardoned, and flew home to Japan."
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "lines": [
+    {
+     "t": "HE WOULD"
+    },
+    {
+     "t": "NOT"
+    },
+    {
+     "t": "SURRENDER",
+     "c": "a"
+    }
+   ],
+   "question": "Would you have believed the leaflets?",
+   "segments": [
+    {
+     "vo": "The soldier who would not surrender.",
+     "cap": ""
+    },
+    {
+     "vo": "Would you have believed the leaflets? Tell me in the comments.",
+     "cap": ""
+    }
+   ]
+  }
+ ]
+}
